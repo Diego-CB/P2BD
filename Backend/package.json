@@ -1,0 +1,16 @@
+{
+  "name": "backend_pb2",
+  "version": "1.0.0",
+  "description": "backend de proyecto",
+  "main": "index.js",
+  "scripts": {
+    "start" : "node backend.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Diego cordova, pao de leon, pao contreras",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "pg": "^8.7.3"
+  }
+}
