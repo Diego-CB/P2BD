@@ -2,14 +2,15 @@
   "name": "backend_pb2",
   "version": "1.0.0",
   "description": "backend de proyecto",
-  "main": "index.js",
+  "main": "backend.js",
   "scripts": {
-    "start" : "node backend.js",
+    "start": "node backend.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "Diego cordova, pao de leon, pao contreras",
+  "author": "Diego Cordova - Paola de Leon, Pao Contreras",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.3",
     "pg": "^8.7.3"
   }

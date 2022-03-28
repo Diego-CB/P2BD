@@ -1,0 +1,99 @@
+/*
+@import url(./content.css);
+@import url(./Header.css);
+*/
+
+/* main Content */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.content {
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+/* Header */
+header {
+    height: 70px;
+    width: 100vw;
+    color: white;
+    background-color: rgb(0, 31, 116);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+img {
+    max-height: 80%;
+    margin-left: 10px;
+}
+
+header h3 {
+    margin-right: 20px;
+}
+
+/* Main Content */
+.main-content {
+    flex-grow: 1;
+    width: 100%;
+
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+}
+
+/* Sign In */
+.main-content form {
+    width: 500px;
+    height: 500px;
+    margin-top: 50px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    border: solid rgb(82, 82, 82) 2px;
+    border-radius: 4%;
+}
+
+.userInput {
+    margin-top: 30px;
+    width: 350px;
+}
+
+.userInput input {
+    margin-top: 5px;
+    width: 100%;
+    height: 20px;
+    border: none;
+    border-bottom: solid black 2px;
+}
+
+.userInput select {
+    margin-top: 5px;
+    width: 100%;
+} 
+
+.adminInput {
+    margin-top: 20px;
+}
+
+
+form button {
+    width: 150px;
+    height: 25px;
+    margin-top: 30px;
+
+    border: none;
+    border-radius: 8px;
+}
+

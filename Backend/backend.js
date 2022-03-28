@@ -12,31 +12,62 @@
 
 // Imports
 const express = require('express')
+const bodyParser = require('body-parser')
+const cors = require('cors')
 const pg = require('pg')
-const app = express()
 
-// Coneccion con base de datos
+// Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
-const client = new pg.Client(conString)
 
-client.connect(function(err) {
+/*
+client.connect((err) => {
 	if(err) {
 		return console.error('could not connect to postgres', err)
 	}
+	
 	client.query('SELECT NOW() AS "theTime"', (err, result) => {
 		if(err) {
 			return console.error('error running query', err)
 		}
 		client.end();
 	});
-});
+})*/
 
 // Server para API
+const app = express()
+app.use(bodyParser.json())
+app.use(cors())
+
+app.listen(8000, () => {
+    console.log('Corrio en 8000 :D')
+})
+
 app.get('/', (req, res) => {
     res.send('Hello World')
 })
 
-app.listen(8000, () => {
-    console.log('Corrio en 8000 :D')
+// Registro de nuevos usuarios
+app.post('/register', (req, res) => {  
+	
+	const admin = !(req.body.admin === 'false')
+	
+	const sql = `
+		INSERT INTO users (username, email, user_password, plan, administrador, habilitado) 
+		VALUES ('${req.body.username}', '${req.body.email}', '${req.body.password}', ${parseInt(req.body.plan)},${admin}, true)`
+  
+	const client = new pg.Client(conString)
+	client.connect((err) => {
+		if(err) {
+			return console.error('could not connect to postgres', err)
+		}
+		
+		client.query(sql, (err, result) => {
+			if(err) {
+				return console.error('error running query', err)
+			}
+			client.end();
+			res.json({ success: true })
+		});
+	})
 })
 
