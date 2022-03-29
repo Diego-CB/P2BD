@@ -46,26 +46,44 @@ const setDocTitle = (newTitle) => {
 }
 
 const handleRegister = (username, email, password, admin, plan) => {
-	console.log(username, email, password, admin, plan)
-	fetch('http://127.0.0.1:8000/register', {
+
+    fetch('http://127.0.0.1:8000/checkNewUser', {
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
 		body: JSON.stringify({
 			username,
-			email,
-			password,
-			admin,
-			plan,
 		})
 	})
 	.then(response => response.json())
 	.then(result => {
-		console.log('Sign in succed :D', result)
+        if (result.userExist) return alert('El usuario ya existe')
+
+        fetch('http://127.0.0.1:8000/register', {
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            method: 'POST',
+            body: JSON.stringify({
+                username,
+                email,
+                password: CryptoJS.MD5(password).toString(),
+                admin,
+                plan,
+            })
+        })
+        .then(response => response.json())
+        .then(result => {
+            if (!result.success) return alert('Error al crear usuario')
+            alert('Se creo usuario con exito!!')
+        })
+        .catch(error => {
+            console.error('Failed to sign in', error)
+        })
 	})
 	.catch(error => {
-		console.error('Failed to sign in', error)
+		console.error('Failed to check for user', error)
 	})
 }
 
@@ -84,20 +102,19 @@ const Login = () => {
 const UserPage = () => {
 	const [username, setUsername] = React.useState('')
 	const [password, setPassword] = React.useState('')
-	const [isRegis, setIsRegis] = React.useState(false)
+	const [isRegis, setIsRegis] = React.useState(true)
 
 
 	return (
 		<React.Fragment>
 
-			{/*isRegis ? <SignIn/>: <Login/>*/}
-			<SignIn />
+			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login/>}
 
 		</React.Fragment>
 	)
 }
 
-const SignIn = () => {
+const SignIn = ({setIsRegis}) => {
 	setDocTitle('Registro')
 
 	const [username, setUsername] = React.useState('')
@@ -133,7 +150,11 @@ const SignIn = () => {
 					</div>		
 
 					<button type='button' 
-						onClick ={() => handleRegister(username, email, password, admin, plan)}>
+						onClick ={() => {
+                            handleRegister(username, email, password, admin, plan)
+                            setTimeout(setIsRegis, 2000, false)
+                            //setIsRegis(false)
+                        }}>
 						Registrar Cuenta</button>
 				</form>
 
