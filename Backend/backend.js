@@ -69,12 +69,17 @@ app.post('/checkNewUser', (req, res) => {
 })
 
 app.post('/register', (req, res) => {  
-	
-	const admin = !(req.body.admin === 'false')
-	
+		
 	const sql = `
 		INSERT INTO users (username, email, user_password, plan, administrador, habilitado) 
-		VALUES ('${req.body.username}', '${req.body.email}', '${req.body.password}', ${parseInt(req.body.plan)},${admin}, true)`
+        VALUES (
+            '${req.body.username}', 
+            '${req.body.email}', 
+            '${req.body.password}', 
+            ${parseInt(req.body.plan)},
+            ${req.body.admin}, 
+            true
+        )`
   
 	const client = new pg.Client(conString)
 

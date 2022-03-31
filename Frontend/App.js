@@ -45,7 +45,7 @@ const setDocTitle = (newTitle) => {
 	document.getElementById('title').textContent = newTitle
 }
 
-const handleRegister = (username, email, password, admin, plan) => {
+const handleRegister = (username, email, password, admin, plan, setIsRegis) => {
 
     fetch('http://127.0.0.1:8000/checkNewUser', {
 		headers: {
@@ -69,7 +69,7 @@ const handleRegister = (username, email, password, admin, plan) => {
                 username,
                 email,
                 password: CryptoJS.MD5(password).toString(),
-                admin,
+                admin: admin.toString(),
                 plan,
             })
         })
@@ -77,13 +77,16 @@ const handleRegister = (username, email, password, admin, plan) => {
         .then(result => {
             if (!result.success) return alert('Error al crear usuario')
             alert('Se creo usuario con exito!!')
+			setTimeout(setIsRegis, 2000, false)
         })
         .catch(error => {
             console.error('Failed to sign in', error)
+			alert('Error de conexion: intente más tarde')
         })
 	})
 	.catch(error => {
 		console.error('Failed to check for user', error)
+		alert('Error de conexion: intente más tarde')
 	})
 }
 
@@ -120,7 +123,7 @@ const SignIn = ({setIsRegis}) => {
 	const [username, setUsername] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	const [email, setEmail] = React.useState('')
-	const [admin, setAdmin] = React.useState('false')
+	const [admin, setAdmin] = React.useState(false)
 	const [plan, setPlan] = React.useState(-1)
 
 	return (
@@ -136,7 +139,7 @@ const SignIn = ({setIsRegis}) => {
 						<select 
 						onChange={(event) => setPlan(event.target.value)}
 						name="select" className="plan-select">
-							<option value="">-</option>
+							<option value='-1'>-</option>
 							<option value='0'>Plan gratis</option>
 							<option value='1'>Plan Standar</option>
 							<option value='2'>Plan Avanzado</option>
@@ -145,15 +148,16 @@ const SignIn = ({setIsRegis}) => {
 					
 					<div className = 'adminInput'>
 						<label>Usuario Admin: </label>
-						<input onChange ={(event) => setAdmin(event.target.value)}
+						<input onChange ={() => setAdmin(!admin)}
 						type="checkbox" id="isAdmin"/>
 					</div>		
 
 					<button type='button' 
 						onClick ={() => {
-                            handleRegister(username, email, password, admin, plan)
-                            setTimeout(setIsRegis, 2000, false)
-                            //setIsRegis(false)
+							if (username == '' || email == '' || password == '' || plan == '-1') {
+								return alert('Llene los campos para continuar')
+							} 
+                            handleRegister(username, email, password, admin, plan, setIsRegis)
                         }}>
 						Registrar Cuenta</button>
 				</form>
