@@ -94,3 +94,21 @@ app.post('/register', (req, res) => {
 	})
 })
 
+app.post('/login', (req, res) => {
+
+	const sql = `
+	SELECT * FROM users WHERE username = '${req.body.username}' AND user_password = '${req.body.password}'
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true })
+		})
+	})
+})
+

@@ -91,27 +91,71 @@ const handleRegister = (username, email, password, admin, plan, setIsRegis) => {
 }
 
 
+const handleLogin = (username, password, setIsRegis) => {
+	fetch('http://127.0.0.1:8000/login', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+			password: CryptoJS.MD5(password).toString(),
+		})
+    })
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return alert('Error al hacer login')
+		alert('Bienvenido!')
+		setTimeout(setIsRegis, 2000, false)
+	})
+	.catch (error => {
+		console.error('Error al intentar loggear', error)
+		alert('Error de conexion: intente más tarde')
+	})
+}
+
+
 // -------- Paginas concretas --------
 
 //TODO
-const Login = () => {
+const Login = ({setIsRegis}) => {
+	const [usernameL, setUsernameL] = React.useState('')
+	const [passwordL, setPasswordL] = React.useState('')
+	const [isRegistering, setRegistering] = React.useState(false)
+
 	return(
-		<h1>
-			Logiiiiin
-		</h1>
+		<div className = 'content'>
+			<Header title='Login'/>
+			<div className='main-content-login'>
+				<form>
+					<div className="userInput">
+						<TextInput set = {setUsernameL} title='Ingrese Nombre de Usuario' className='userInput'/> 
+						<TextInput set = {setPasswordL} title='Ingrese Contraseña' className='userInput' password={true}/> 
+					</div>
+					<button type='button'  className='button-C'
+						onClick ={() => {
+							if (usernameL == '' || passwordL == '') {
+								return alert('Llene los campos para continuar')
+							}
+							handleLogin(usernameL, passwordL, setIsRegis)
+                        }}>Login</button>
+					{!isRegistering && <a className="SignIn-op" onClick={()=> setTimeout(setIsRegis, 100, true)}>Sign In</a>}
+				</form>
+			</div>
+		</div>
 	)
 }
 
 const UserPage = () => {
 	const [username, setUsername] = React.useState('')
 	const [password, setPassword] = React.useState('')
-	const [isRegis, setIsRegis] = React.useState(true)
+	const [isRegis, setIsRegis] = React.useState(false)
 
 
 	return (
 		<React.Fragment>
 
-			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login/>}
+			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis}/>}
 
 		</React.Fragment>
 	)
@@ -152,7 +196,7 @@ const SignIn = ({setIsRegis}) => {
 						type="checkbox" id="isAdmin"/>
 					</div>		
 
-					<button type='button' 
+					<button type='button' className='button-C'
 						onClick ={() => {
 							if (username == '' || email == '' || password == '' || plan == '-1') {
 								return alert('Llene los campos para continuar')
@@ -178,6 +222,7 @@ const App = () => {
 	return (
 		<UserPage/>
 	)
+
 }
 
 ReactDOM.render(
