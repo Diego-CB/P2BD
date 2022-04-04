@@ -96,9 +96,7 @@ app.post('/register', (req, res) => {
 
 app.post('/login', (req, res) => {
 
-	const sql = `
-	SELECT * FROM users WHERE username = '${req.body.username}' AND user_password = '${req.body.password}'
-	`
+	const sql = `SELECT * FROM users WHERE username = '${req.body.username}' AND user_password = '${req.body.password}'`
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -106,8 +104,12 @@ app.post('/login', (req, res) => {
 		
 		client.query(sql, (err, result) => {
 			if(err) return console.error('error running query', err)
+
 			client.end()
-			res.json({ success: true })
+			res.json({
+				userExist: result.rows.length > 0,
+				username: result.rows
+			})
 		})
 	})
 })

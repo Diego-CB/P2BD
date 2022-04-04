@@ -91,7 +91,7 @@ const handleRegister = (username, email, password, admin, plan, setIsRegis) => {
 }
 
 
-const handleLogin = (username, password, setIsRegis) => {
+const handleLogin = (username, password, setIsRegis, setIsLogedIn) => {
 	fetch('http://127.0.0.1:8000/login', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -104,9 +104,11 @@ const handleLogin = (username, password, setIsRegis) => {
     })
 	.then(response => response.json())
 	.then (result => {
-		if (!result.success) return alert('Error al hacer login')
-		alert('Bienvenido!')
+		if (!result.userExist) return alert('Usuario no encontrado')
+		// alert('Bienvenido!')
+		console.log(result.username)
 		setTimeout(setIsRegis, 2000, false)
+		setTimeout(setIsLogedIn, 100, true)
 	})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
@@ -118,7 +120,7 @@ const handleLogin = (username, password, setIsRegis) => {
 // -------- Paginas concretas --------
 
 //TODO
-const Login = ({setIsRegis}) => {
+const Login = ({setIsRegis, setIsLogedIn}) => {
 	const [usernameL, setUsernameL] = React.useState('')
 	const [passwordL, setPasswordL] = React.useState('')
 	const [isRegistering, setRegistering] = React.useState(false)
@@ -137,7 +139,7 @@ const Login = ({setIsRegis}) => {
 							if (usernameL == '' || passwordL == '') {
 								return alert('Llene los campos para continuar')
 							}
-							handleLogin(usernameL, passwordL, setIsRegis)
+							handleLogin(usernameL, passwordL, setIsRegis, setIsLogedIn)
                         }}>Login</button>
 					{!isRegistering && <a className="SignIn-op" onClick={()=> setTimeout(setIsRegis, 100, true)}>Sign In</a>}
 				</form>
@@ -146,7 +148,7 @@ const Login = ({setIsRegis}) => {
 	)
 }
 
-const UserPage = () => {
+const UserPage = ({setIsLogedIn}) => {
 	const [username, setUsername] = React.useState('')
 	const [password, setPassword] = React.useState('')
 	const [isRegis, setIsRegis] = React.useState(false)
@@ -155,7 +157,7 @@ const UserPage = () => {
 	return (
 		<React.Fragment>
 
-			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis}/>}
+			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis} setIsLogedIn={setIsLogedIn}/>}
 
 		</React.Fragment>
 	)
@@ -212,17 +214,14 @@ const SignIn = ({setIsRegis}) => {
 }
 
 const App = () => {
-
+	const [isLogedIn, setIsLogedIn] = React.useState(false)
 	const user = {}
 
-	if(user.isLogedIn){
-		// TODO return homepage
-	}
-
 	return (
-		<UserPage/>
+		<React.Fragment>
+			{isLogedIn ? <h1>Perfiles</h1> : <UserPage setIsLogedIn={setIsLogedIn}/>}
+		</React.Fragment>
 	)
-
 }
 
 ReactDOM.render(
