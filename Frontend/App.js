@@ -38,7 +38,6 @@ const TextInput = ({className, initValue, title, password, set}) => {
 	)
 }
 
-
 // -------- Funciones auxiliares --------
 
 const setDocTitle = (newTitle) => {
@@ -91,7 +90,7 @@ const handleRegister = (username, email, password, admin, plan, setIsRegis) => {
 }
 
 
-const handleLogin = (username, password, setIsRegis, setIsLogedIn) => {
+const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername) => {
 	fetch('http://127.0.0.1:8000/login', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -106,9 +105,12 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn) => {
 	.then (result => {
 		if (!result.userExist) return alert('Usuario no encontrado')
 		// alert('Bienvenido!')
-		console.log(result.username)
+		const user = result.username[0].username.toString()
+		
 		setTimeout(setIsRegis, 2000, false)
 		setTimeout(setIsLogedIn, 100, true)
+		setTimeout(setUsername, 100, user)
+
 	})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
@@ -116,11 +118,39 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn) => {
 	})
 }
 
+const handleProfile = (username,perfil,estado,habilitado) => {
+	fetch('http://127.0.0.1:8000/perfiles', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+			perfil,
+			estado,
+			habilitado
+			
+		})
+    })
+	.then(response => response.json())
+	.then (result => {
+		if (!result.userExist) return alert('No se ha podido crear perfil')
+		//console.log(result.username)
+		alert('Perfil creado con exito')
+		setTimeout(setIsLogedIn, 100, true)
+
+	})
+	.catch (error => {
+		console.error('Error al crear user', error)
+		alert('Error de conexion:( intente más tarde')
+	})
+}
+
 
 // -------- Paginas concretas --------
 
 //TODO
-const Login = ({setIsRegis, setIsLogedIn}) => {
+const Login = ({setIsRegis, setIsLogedIn,setUsername}) => {
 	const [usernameL, setUsernameL] = React.useState('')
 	const [passwordL, setPasswordL] = React.useState('')
 	const [isRegistering, setRegistering] = React.useState(false)
@@ -139,7 +169,7 @@ const Login = ({setIsRegis, setIsLogedIn}) => {
 							if (usernameL == '' || passwordL == '') {
 								return alert('Llene los campos para continuar')
 							}
-							handleLogin(usernameL, passwordL, setIsRegis, setIsLogedIn)
+							handleLogin(usernameL, passwordL, setIsRegis, setIsLogedIn, setUsername)
                         }}>Login</button>
 					{!isRegistering && <a className="SignIn-op" onClick={()=> setTimeout(setIsRegis, 100, true)}>Sign In</a>}
 				</form>
@@ -148,16 +178,14 @@ const Login = ({setIsRegis, setIsLogedIn}) => {
 	)
 }
 
-const UserPage = ({setIsLogedIn}) => {
-	const [username, setUsername] = React.useState('')
-	const [password, setPassword] = React.useState('')
+const UserPage = ({setIsLogedIn,setUsername}) => {
 	const [isRegis, setIsRegis] = React.useState(false)
 
 
 	return (
 		<React.Fragment>
 
-			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis} setIsLogedIn={setIsLogedIn}/>}
+			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis} setIsLogedIn={setIsLogedIn} setUsername={setUsername}/>}
 
 		</React.Fragment>
 	)
@@ -213,13 +241,70 @@ const SignIn = ({setIsRegis}) => {
 	)
 }
 
+const Perfiles = () => {
+	setDocTitle('Perfiles')
+	const [perfil, setPerfil] = React.useState('')
+	const [estado, setEstado] =React.useState(false)
+	const [habilitado, setHabilitado] = React.useState(true)
+	const [plan, setPlan]= React.useState('')
+
+	const [cuentaList, setCuentalist] = React.useState([{cuenta:""}])
+
+
+   const AddperfilBtn = ()=>{
+	   setCuentalist([...cuentaList,{cuenta:""}])
+   }
+
+   const StopAdd =()=>{
+	setCuentalist([...cuentaList],"")
+	alert("Ya no se pueden añadir más perfiles")
+   }
+   
+   const actualPlan =()=>{
+		setPlan()
+   }
+
+   return (
+	<div className='contenido'>
+	   <Header title= "Perfiles"/>        
+	   <h1 id="main_title">¿Quien eres?</h1>
+	   <div className="content_profile"> 
+	   {cuentaList.map((singleAccount, index) =>
+			<div key={index} className= "cuentas" >
+			<div className="perfil" />
+			<div className="info">
+				<form>
+					<input type="text"  
+						   id="input_cuenta" 
+						   placeholder="No. Perfil" 
+						   onChange={(event) => setPerfil(event.target.value)}/>
+						   
+				</form>
+			</div>
+		</div>
+	   )}
+	   </div>
+	  <button type="button" id="btn" onClick={()=> {AddperfilBtn()}}> Añadir perfil </button>
+	</div>
+	
+  )
+  }
+
+
+
+
+
+
+
 const App = () => {
 	const [isLogedIn, setIsLogedIn] = React.useState(false)
-	const user = {}
+	const [username, setUsername]=React.useState('')
+	const [plan, setPlan]= React.useState('')
 
 	return (
 		<React.Fragment>
-			{isLogedIn ? <h1>Perfiles</h1> : <UserPage setIsLogedIn={setIsLogedIn}/>}
+			{isLogedIn ? <Perfiles setUsername={setUsername}/>:<UserPage setIsLogedIn={setIsLogedIn} setUsername={setUsername}/>
+}
 		</React.Fragment>
 	)
 }
