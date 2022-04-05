@@ -8,6 +8,8 @@
 > ### Frontend 
 > - Dev Server: npm start
 > - Compile: npm run build
+> - Crear carpeta "node_modules": npm install (dentro de Frontend)
 
 > ### Backend
 > - Deploy api server: npm start
+> - Crear carpeta "node_modules": npm install (dentro de Backend)
