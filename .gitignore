@@ -1,3 +1,7 @@
 /Backend/node_modules
 /Frontend/node_modules
 /Frontend/dist/bundle.js
+/Frontend/dist/bundle.js.LICENSE.txt
+/Frontend/dist/!*.jp*g
+/Frontend/dist/!*.pn*g
+/Frontend/dist/!*.gi*f
