@@ -226,7 +226,8 @@ form button {
     background-position: center;
     -moz-border-radius: 50%;
     -webkit-border-radius: 50%;    
-    background-image:url(../images/imgperfiles/p1.png) ;
+    background-color: skyblue;
+    /*background-image:url(../images/imgperfiles/p1.png) ;*/
 }
 
 .info{

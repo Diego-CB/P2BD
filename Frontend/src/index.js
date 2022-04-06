@@ -13,7 +13,7 @@ const App = () => {
 
 	return (
 		<React.Fragment>
-			{isLogedIn ? <Perfiles setUsername={setUsername}/>:<UserPage setIsLogedIn={setIsLogedIn} setUsername={setUsername}/>}
+			{isLogedIn ? <Perfiles Username={username}/>:<UserPage setIsLogedIn={setIsLogedIn} setUsername={setUsername}/>}
 		</React.Fragment>
 	)
 }

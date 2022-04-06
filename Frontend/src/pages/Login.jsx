@@ -27,7 +27,6 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername) 
 		setTimeout(setIsRegis, 2000, false)
 		setTimeout(setIsLogedIn, 100, true)
 		setTimeout(setUsername, 100, user)
-
 	})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
