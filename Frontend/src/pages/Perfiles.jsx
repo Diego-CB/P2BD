@@ -1,6 +1,6 @@
 import React from "react";
 import Header from "../components/Header.jsx";
-
+import personas from '../images/persona.png'
 import setDocTitle from "../util/docTitle.js";
 
 const handleProfile = (perfil,estado,habilitado) => {
@@ -54,72 +54,117 @@ const handlePlan = (username, setPlan) => {
 	})
 }
 
-
 const Perfiles = ({Username}) => {
 	setDocTitle('Perfiles')
-	const [perfil, setPerfil] = React.useState('')
-	const [estado, setEstado] =React.useState(false)
-	const [habilitado, setHabilitado] = React.useState(true)
-	const [plan, setPlan]= React.useState(1)
-	const [count, setCount]=React.useState(1)
+    const [plan, setPlan]= React.useState(1);
+	const [count, setCount]=React.useState(0);
+    const [profile, setProfile] = React.useState([]);
+	const [disable, setDisable] = React.useState(false);
+	const [nameProfile, setNameprofile] = React.useState('');
+	const [disabletext, setDisableText] = React.useState(false);
+	const [disableProfile, setDisableProfile]= React.useState('');
 
-	const [cuentaList, setCuentalist] = React.useState([{cuenta:""}])
-	//handlePlan({Username})
-	//const check = 
 	handlePlan(Username, setPlan)
 	console.log(plan)
-	
-	const AddperfilBtn = ()=>{
-		setCuentalist([...cuentaList,{cuenta:""}]) 
-		setCount((count+1))
-		//console.log(count)
-		if(plan === '0'){
-			if (count >=1){
-				StopAdd()
-				alert("Unicamente dispones de un perfil por tener la cuenta gratuita")
-		}
-		}
-		if(plan==='1'){
-			if(count >= 4){
-				//alert("max estandar")
-				StopAdd()
-			}
-		}
-		if(plan === '2'){
-		if (count >= 8 ){
-				StopAdd()
-			} 
-		}
-	}
+	//console.log("conteo",count)
+	//console.log(disable, "estado")
+
+	 
+    const AddProfile = (disable) =>{
+        if(!nameProfile){
+            alert('Ingrese un nombre para el nuevo perfil')
+        }else{
+            setProfile([...profile, nameProfile]);
+            setNameprofile('');  
+			setCount((count+1));
+            if(plan === '0'){
+                 if (count >=0){
+                    StopAdd();
+                }   
+            }
+            if(plan === '1'){
+                if (count >=3){
+                  StopAdd();
+               }
+           }
+           if(plan === '2'){
+                if (count >=7){
+                    StopAdd();
+                }
+            }
+        }
+
+    }
 
 	const StopAdd =()=>{
-		setCuentalist([...cuentaList],"")
-		alert("Ya no se pueden añadir más perfiles")
+		setDisable(true)
+		setDisableText(true)
+		alert("Este es el último perfil disponible")
 	}
 
-   return (
-	<div className='contenido'>
-	   <Header title= "Perfiles"/>        
-	   <h1 id="main_title">¿Quien eres?</h1>
-	   <div className="content_profile"> 
-	   {cuentaList.map((singleAccount, index) =>
-			<div key={index} className= "cuentas" >
-			<div className="perfil" />
-			<div className="info">
-				<form>
-					<input type="text"  
-						   id="input_cuenta" 
-						   placeholder="No. Perfil" 
-						   onChange={(event) => setPerfil(event.target.value)}/>
-						   
-				</form>
-			</div>
-		</div>
-	   )}
-	   </div>
-	  <button type="button" id="btn" onClick={()=> {AddperfilBtn()}}> Añadir perfil </button>
-	</div>
-	
-)}
+    const RemoveProfile = (ind) =>{
+		setCount((count-1));
+        setDisable(false)
+		setDisableText(false)
+
+		const updateProfile =profile.filter((element,index) =>{
+			setDisableProfile(element)
+			return index !== ind;
+			
+        })
+        setProfile(updateProfile);
+    }
+     return (
+          <div className='main-div'>
+            <Header title= "Perfiles"/>  
+            <div className='child-div'>
+                <div className="child-one">
+                    <img src={personas} alt="person-logo" id="icon-person"/>
+                    <h2 id="who-watching">¿Quien eres?</h2>
+                </div>
+                <div className="add-profile">
+                    <input id="profile-input"
+                            type="text" 
+                            placeholder="Añadir nuevo perfil ..." 
+                            value={nameProfile} 
+							disabled={disabletext}
+                            onChange={(event) => setNameprofile(event.target.value)}>
+                    </input>
+                    <button id="btn-add" 
+                            title='Add Profile'
+							disabled={disable}
+                            onClick={()=> {AddProfile()}}
+                            
+                    > + </button>
+                </div>
+                <div className="show-profiles">
+                    {profile.map((element,index) => {
+                        return(
+                            <div className= "show-each-profile" key={index}>
+                                <h4 id="name-use">{element}</h4>
+                                <button id="btn-remove" 
+                                        title='Remove Profile'
+                                        onClick={() => RemoveProfile(index)}> - </button>   
+                            </div>
+                        )
+                    })}
+                    
+                </div>
+               <div className="change-plan">
+                   <select 
+						onChange={(event) => setPlan(event.target.value)}
+						name="select" className="upgrade">
+							<option value='-1'>Cambiar plan</option>
+							<option value='0'>Plan gratis</option>
+							<option value='1'>Plan Standar</option>
+							<option value='2'>Plan Avanzado</option>
+					</select>
+               </div>
+            </div>   
+          </div>  
+       
+     )
+   }
+
 
 export default Perfiles
