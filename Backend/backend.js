@@ -127,10 +127,11 @@ app.post('/checkplan', (req, res) => {
 app.post('/profiles', (req, res) => {  
 		
 	const sql = `
-	INSERT INTO user_profiles (username, profile, habilitado) 
+	INSERT INTO user_profiles (username, profile, estado, habilitado) 
         VALUES (
             '${req.body.username}', 
             '${req.body.profile}', 
+			false,
             true
         )`
   
