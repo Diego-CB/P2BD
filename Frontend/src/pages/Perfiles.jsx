@@ -3,6 +3,8 @@ import Header from "../components/Header.jsx";
 import personas from '../images/persona.png'
 import setDocTitle from "../util/docTitle.js";
 
+import '../styles/profiles.css'
+
 const handleProfile = (perfil,estado,habilitado) => {
 	fetch('http://127.0.0.1:8000/perfiles', {
 		headers: {
@@ -43,10 +45,11 @@ const handlePlan = (username, setPlan) => {
     })
 	.then(response => response.json())
 	.then (result => {
+        console.log(result)
 		if (!result.userExist) return alert('No se ha podido crear perfil aquiiiii')
 		const profile_plan = result.username[0].plan.toString()
 		// console.log('Plannnn ' ,profile_plan)
-		setTimeout(setPlan, 100, profile_plan)
+		setPlan(profile_plan)
 	})
 	.catch (error => {
 		console.error('Error al crear user', error)
@@ -116,7 +119,7 @@ const Perfiles = ({Username}) => {
     }
      return (
           <div className='main-div'>
-            <Header title= "Perfiles"/>  
+            <Header title= "Perfiles" user={Username}/>  
             <div className='child-div'>
                 <div className="child-one">
                     <img src={personas} alt="person-logo" id="icon-person"/>

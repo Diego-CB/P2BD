@@ -3,16 +3,20 @@ import React from "react"
 import Login from './Login.jsx'
 import SignIn from './SignIn.jsx'
 
-const UserPage = ({setIsLogedIn,setUsername}) => {
+import '../styles/login.css'
+
+const UserPage = ({ setIsLogedIn,setUsername, setIsAdmin }) => {
 	const [isRegis, setIsRegis] = React.useState(false)
 
-
+	if (isRegis) return <SignIn setIsRegis={setIsRegis}/>
+	
 	return (
-		<React.Fragment>
-
-			{isRegis ? <SignIn setIsRegis={setIsRegis}/>: <Login setIsRegis={setIsRegis} setIsLogedIn={setIsLogedIn} setUsername={setUsername}/>}
-
-		</React.Fragment>
+		<Login 
+			setIsRegis={setIsRegis} 
+			setIsLogedIn={setIsLogedIn} 
+			setUsername={setUsername}
+			setIsAdmin={setIsAdmin}
+		/>
 	)
 }
 

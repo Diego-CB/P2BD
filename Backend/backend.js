@@ -19,21 +19,6 @@ const pg = require('pg')
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
 
-/*
-client.connect((err) => {
-	if(err) {
-		return console.error('could not connect to postgres', err)
-	}
-	
-	client.query('SELECT NOW() AS "theTime"', (err, result) => {
-		if(err) {
-			return console.error('error running query', err)
-		}
-		client.end();
-	});
-})
-*/
-
 // Server para API
 const app = express()
 app.use(bodyParser.json())
@@ -105,7 +90,9 @@ app.post('/login', (req, res) => {
 		client.query(sql, (err, result) => {
 			if(err) return console.error('error running query', err)
 
+			
 			client.end()
+			console.log(result.rows)
 			res.json({
 				userExist: result.rows.length > 0,
 				username: result.rows
@@ -126,6 +113,10 @@ app.post('/checkplan', (req, res) => {
 			if(err) return console.error('error running query', err)
 
 			client.end()
+			console.log(sql)
+			console.log(req.body.username)
+			//console.log(result)
+
 			res.json({
 				userExist: result.rows.length > 0,
 				username: result.rows

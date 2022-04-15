@@ -7,7 +7,7 @@ import MD5 from '../../node_modules/crypto-js/md5.js'
 import setDocTitle from "../util/docTitle.js";
 
 
-const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername) => {
+const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername, setIsAdmin) => {
 	fetch('http://127.0.0.1:8000/login', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -23,10 +23,14 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername) 
 		if (!result.userExist) return alert('Usuario no encontrado')
 		// alert('Bienvenido!')
 		const user = result.username[0].username.toString()
-		
-		setTimeout(setIsRegis, 2000, false)
-		setTimeout(setIsLogedIn, 100, true)
-		setTimeout(setUsername, 100, user)
+		const admin = result.username[0].administrador
+		setIsRegis(false)
+		setIsLogedIn(true)
+		setUsername(user)
+		setIsAdmin(admin)
+		//setTimeout(setIsRegis, 2000, false)
+		//setTimeout(setIsLogedIn, 100, true)
+		//setTimeout(setUsername, 100, user)
 	})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
@@ -34,7 +38,7 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername) 
 	})
 }
 
-const Login = ({setIsRegis, setIsLogedIn,setUsername}) => {
+const Login = ({ setIsRegis, setIsLogedIn,setUsername, setIsAdmin }) => {
 	setDocTitle('Login')
 	const [usernameL, setUsernameL] = React.useState('')
 	const [passwordL, setPasswordL] = React.useState('')
@@ -54,9 +58,9 @@ const Login = ({setIsRegis, setIsLogedIn,setUsername}) => {
 							if (usernameL == '' || passwordL == '') {
 								return alert('Llene los campos para continuar')
 							}
-							handleLogin(usernameL, passwordL, setIsRegis, setIsLogedIn, setUsername)
+							handleLogin(usernameL, passwordL, setIsRegis, setIsLogedIn, setUsername, setIsAdmin)
                         }}>Login</button>
-					{!isRegistering && <a className="SignIn-op" onClick={()=> setTimeout(setIsRegis, 100, true)}>Sign In</a>}
+					{!isRegistering && <a className="SignIn-op" onClick={()=> setIsRegis(true)}>Sign In</a>}
 				</form>
 			</div>
 		</div>

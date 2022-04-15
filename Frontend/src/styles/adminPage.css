@@ -1,0 +1,20 @@
+/* Log in */
+.main-content div {
+    width: 500px;
+    height: 300px;
+    margin-top: 70px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+    border: solid white 2px;
+    border-radius: 4%;
+
+    color: white;
+}
+
+.main-content > * {
+    color: white;
+}
