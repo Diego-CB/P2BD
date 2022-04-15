@@ -92,7 +92,6 @@ app.post('/login', (req, res) => {
 
 			
 			client.end()
-			console.log(result.rows)
 			res.json({
 				userExist: result.rows.length > 0,
 				username: result.rows
@@ -113,8 +112,6 @@ app.post('/checkplan', (req, res) => {
 			if(err) return console.error('error running query', err)
 
 			client.end()
-			console.log(sql)
-			console.log(req.body.username)
 			//console.log(result)
 
 			res.json({
