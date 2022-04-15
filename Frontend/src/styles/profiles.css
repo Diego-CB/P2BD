@@ -135,8 +135,11 @@
 }
 
 .change-plan{
+    width: 140px;
+    height: 44px;
     display:flex;
     align-items: center;
+    flex-direction: column;
     justify-content: center;
     position: relative;
     margin-top: 50px;
@@ -160,4 +163,20 @@
   
   .change-plan select option {
     padding: 30px;
+  }
+
+  #btn-changePlan{
+    background-color: transparent;
+    cursor: pointer;
+    height: 20px;
+    color: rgb(101, 127, 207);
+    border: none;
+    font-size: 8px;
+    border-radius: 6px;
+    font-weight: bolder;
+  }
+
+  #btn-changePlan:hover{
+    color: white;
+    font-size: 10px;
   }

@@ -124,3 +124,82 @@ app.post('/checkplan', (req, res) => {
 		})
 	})
 })
+
+// Perfiles
+
+app.post('/profiles', (req, res) => {  
+		
+	const sql = `
+	INSERT INTO user_profiles (username, profile, habilitado) 
+        VALUES (
+            '${req.body.username}', 
+            '${req.body.profile}', 
+            true
+        )`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true })
+		})
+	})
+})
+
+app.post('/deleteprofiles', (req, res) => {  
+		
+	const sql = `
+	DELETE FROM user_profiles WHERE profile = '${req.body.profile}' AND username = '${req.body.username}' `
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true })
+		})
+	})
+})
+
+app.post('/upgrade', (req, res) => {  
+		
+	const sql = `UPDATE users SET plan = ${parseInt(req.body.plan)} WHERE username = '${req.body.username}'`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true})
+		})
+	})
+})
+
+app.post('/checkprofiles', (req, res) => {
+
+	const sql = `SELECT * FROM user_profiles WHERE username = '${req.body.username}'`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+
+			client.end()
+			res.json({
+				username: result.rows
+			})
+		})
+	})
+})

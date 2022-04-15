@@ -5,26 +5,22 @@ import setDocTitle from "../util/docTitle.js";
 
 import '../styles/profiles.css'
 
-const handleProfile = (perfil,estado,habilitado) => {
-	fetch('http://127.0.0.1:8000/perfiles', {
+const handleProfile = (username,profile) => {
+	fetch('http://127.0.0.1:8000/profiles', {
 		headers: {
 			'Content-Type': 'application/json'
 		},
 		method: 'POST',
 		body: JSON.stringify({
 			username,
-			perfil,
-			estado,
-			habilitado
-			
+			profile,	
 		})
     })
 	.then(response => response.json())
 	.then (result => {
-		if (!result.userExist) return alert('No se ha podido crear perfil')
+		if (!result.success) return alert('No se ha podido crear perfil')
 		//console.log(result.username)
 		alert('Perfil creado con exito')
-		setTimeout(setIsLogedIn, 100, true)
 
 	})
 	.catch (error => {
@@ -45,8 +41,8 @@ const handlePlan = (username, setPlan) => {
     })
 	.then(response => response.json())
 	.then (result => {
-        console.log(result)
-		if (!result.userExist) return alert('No se ha podido crear perfil aquiiiii')
+        //console.log(result)
+		if (!result.userExist) return alert('No se ha podido crear perfil')
 		const profile_plan = result.username[0].plan.toString()
 		// console.log('Plannnn ' ,profile_plan)
 		setPlan(profile_plan)
@@ -56,11 +52,81 @@ const handlePlan = (username, setPlan) => {
 		alert('Error de conexion:( intente más tarde')
 	})
 }
+const handleDelete_Profile = (username,profile) => {
+	fetch('http://127.0.0.1:8000/deleteprofiles', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+			profile,
+		})
+    })
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return alert('No se ha podido eliminar perfil')
+		//console.log(result.username)
+		alert('Perfil eliminado con exito')
+	})
+	.catch (error => {
+		console.error('Error al eliminar perfil', error)
+		alert('Error de conexion:( intente más tarde')
+	})
+}
+
+const handleUpdate = (username,plan) => {
+	fetch('http://127.0.0.1:8000/upgrade', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+			plan,
+		})
+    })
+	.then(response => response.json())
+	.then (result => {console.log(plan)
+		if (!result.success) return alert('No se ha podido cambiar plan')
+		alert('Cambio realizado con exito')
+	})
+	.catch (error => {
+		console.error('Error al cambiar plan', error)
+		alert('Error de conexion:( intente más tarde')
+	})
+}
+
+const handleProfiles = (username,setProfile ) => {
+	fetch('http://127.0.0.1:8000/checkprofiles', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+		})
+    })
+	.then(response => response.json())
+	.then (result => {
+		if (!result.userExist) return alert('No se ha podido crear perfil')
+		//const profile_user = result.username[0].profile.toString()
+		//console.log('Plannnn ' ,profile_user)
+		console.log(result.username)
+		setTimeout(setProfile, 100, profile_plan)
+	})
+	.catch (error => {
+		console.error('Error al crear user', error)
+		alert('Error de conexion:( intente más tarde')
+	})
+}
+
 
 const Perfiles = ({Username}) => {
 	setDocTitle('Perfiles')
     const [plan, setPlan]= React.useState(1);
 	const [count, setCount]=React.useState(0);
+	const [Uplan, setUplan]= React.useState(-1);
     const [profile, setProfile] = React.useState([]);
 	const [disable, setDisable] = React.useState(false);
 	const [nameProfile, setNameprofile] = React.useState('');
@@ -73,7 +139,7 @@ const Perfiles = ({Username}) => {
 	//console.log(disable, "estado")
 
 	 
-    const AddProfile = (disable) =>{
+    const AddProfile = () =>{
         if(!nameProfile){
             alert('Ingrese un nombre para el nuevo perfil')
         }else{
@@ -107,8 +173,8 @@ const Perfiles = ({Username}) => {
 
     const RemoveProfile = (ind) =>{
 		setCount((count-1));
-        setDisable(false)
-		setDisableText(false)
+        setDisable(false);
+		setDisableText(false);
 
 		const updateProfile =profile.filter((element,index) =>{
 			setDisableProfile(element)
@@ -136,7 +202,7 @@ const Perfiles = ({Username}) => {
                     <button id="btn-add" 
                             title='Add Profile'
 							disabled={disable}
-                            onClick={()=> {AddProfile()}}
+                            onClick={()=> {AddProfile(),handleProfile(Username, nameProfile)}}
                             
                     > + </button>
                 </div>
@@ -147,7 +213,7 @@ const Perfiles = ({Username}) => {
                                 <h4 id="name-use">{element}</h4>
                                 <button id="btn-remove" 
                                         title='Remove Profile'
-                                        onClick={() => RemoveProfile(index)}> - </button>   
+                                        onClick={() => {RemoveProfile(index),handleDelete_Profile(Username, disableProfile)}}> - </button>   
                             </div>
                         )
                     })}
@@ -155,13 +221,16 @@ const Perfiles = ({Username}) => {
                 </div>
                <div className="change-plan">
                    <select 
-						onChange={(event) => setPlan(event.target.value)}
+						onChange={(event) => setUplan(event.target.value)}
 						name="select" className="upgrade">
 							<option value='-1'>Cambiar plan</option>
 							<option value='0'>Plan gratis</option>
 							<option value='1'>Plan Standar</option>
 							<option value='2'>Plan Avanzado</option>
 					</select>
+					<button id= 'btn-changePlan' onClick={()=> {
+						if(Uplan=== '-1' || Uplan == -1) return alert('No se ha realizado un cabio en el plan')
+						handleUpdate(Username,Uplan)}}> Done </button>
                </div>
             </div>   
           </div>  
