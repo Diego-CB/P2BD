@@ -1,7 +1,7 @@
 import React from "react"
 import { createRoot } from 'react-dom/client'
 
-import Perfiles from "./pages/Perfiles.jsx"
+import setIcon from './util/setIcon.js'
 import DirectUser from "./pages/DirectUser.jsx"
 import UserPage from "./pages/UserPage.jsx"
 
@@ -9,6 +9,7 @@ import './styles/master.css'
 
 // App
 const App = () => {
+	setIcon()
 	const [isLogedIn, setIsLogedIn] = React.useState(false)
 	const [username, setUsername]=React.useState('')
 	const [isAdmin, setIsAdmin] = React.useState(false)
