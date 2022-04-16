@@ -83,3 +83,130 @@
 .nav-button {
     width: 200px;
 }
+
+/* Content admin page */
+.content-admin-page {
+    width: 90%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 290px 290px;
+    grid-template-rows: calc(100vh - 74%);
+    grid-gap: 10px;
+}
+
+.content-admin-page > * {
+    background-color: red;
+}
+
+/* ver content */
+.ver-content-admin {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-content-admin header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-content-admin header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-headers {
+    display: grid;
+    grid-template-columns: 0.43fr 1fr 1fr 1fr;
+}
+
+.table-headers div {
+    text-align: center;
+    background-color: grey;
+    border: solid black 1px;
+    color: black;
+}
+
+.table-content {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+
+    overflow-y: scroll;
+}
+
+.row-content {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.5fr 1fr 1fr 1fr;
+
+    width: 100%;
+}
+
+.row-content p {
+    border-bottom: solid black 1px;
+    text-align: center;
+    padding-left: 10px;
+}
+
+/* Add movies admin */
+.add-content-admin {
+    background-color: transparent;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.add-content-admin form {
+    display: flex;
+    align-items: space-between;
+    justify-content: space-between;
+}
+
+.add-content-admin header{
+    width: 100%;
+    height: auto;
+    padding-top: 2px;
+    padding-bottom: 2px;
+    display: block;
+}
+
+.add-content-admin header h3 {
+    text-align: center;
+}
+
+.add-content-admin form {
+    margin: 0;
+    border: none;
+
+    display: flex;
+}
+
+.add-movie-input {
+    width: 80%;
+    margin-top: 2px;
+}
+
+.genre-select {
+    width: 90%;
+    height: 16px;
+}
+
+.add-movie-input input {
+    height: 10px;
+    width: 90%;
+}
+
+.add-movie-button {
+    margin-top: 2px;
+}

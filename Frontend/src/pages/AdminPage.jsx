@@ -58,7 +58,7 @@ const AdminOption = ({ title, setAdminShow }) => {
 import Header from '../components/Header.jsx'
 import setDocTitle from '../util/docTitle.js' 
 import AdminAdds from './Admin/AdminAdds.jsx'
-import AdminContent from './Admin/AdminContent.jsx'
+import AdminContent from './Admin/content/AdminContent.jsx'
 import AdminUsers from './Admin/AdminUsers.jsx'
 import AdminReports from './Admin/AdminReports.jsx'
 

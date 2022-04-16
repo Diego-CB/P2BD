@@ -201,3 +201,46 @@ app.post('/checkprofiles', (req, res) => {
 		})
 	})
 })
+
+app.get('/movieList', (req, res) => {
+	const sql = 'SELECT id_content, title, genre, CAST(release_date as TEXT) FROM contenido'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
+
+app.post('/addMovie', (req, res) => {  
+		
+	const sql = `
+		INSERT INTO contenido (title, category, genre, release_date, link, min_duration) 
+        VALUES (
+            '${req.body.title}', 
+            ${req.body.category}, 
+            '${req.body.genre}', 
+            '${req.body.releaseDate}',
+            '${req.body.link}', 
+            ${req.body.duration}
+        )`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true })
+		})
+	})
+})
