@@ -244,3 +244,73 @@ app.post('/addMovie', (req, res) => {
 		})
 	})
 })
+
+app.post('/checkMovieExist', (req, res) => {  
+		
+	const sql = `select * from contenido WHERE id_content = ${req.body.idContent}`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ 
+				movieExist: result.rowCount > 0
+			})
+		})
+	})
+})
+
+
+app.post('/alterMovie', (req, res) => {  
+		
+	const sql = `
+		UPDATE contenido
+		SET ${req.body.category} = ${req.body.newValue}
+		WHERE id_content = ${req.body.idContent}
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+//DELETE FROM table_name WHERE condition
+
+
+app.post('/deleteMovie', (req, res) => {  
+		
+	const sql = `DELETE FROM contenido WHERE id_content = ${req.body.idContent}`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})

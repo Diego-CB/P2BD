@@ -1,7 +1,7 @@
 import React from "react"
 import TextInput from "../../../components/TextInput.jsx"
 
-const handleAddMovie = (title, category, genre, releaseDate, link, duration) => {
+const handleAddMovie = (title, category, genre, releaseDate, link, duration, setMovies) => {
     fetch('http://127.0.0.1:8000/addMovie', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -19,14 +19,15 @@ const handleAddMovie = (title, category, genre, releaseDate, link, duration) => 
 	.then(response => response.json())
 	.then(result => {
         if (!result.success) return alert('No se pudo agregar la pelicula')
-        console.log('Se agrego la pelicula con exito')
+        alert('Se agrego la pelicula con exito')
+        setMovies([])
 	})
 	.catch(error => {
 		console.error('Error al agregar peliculas', error)
 	})
 }
 
-const AddMovie = () => {
+const AddMovie = ({ setMovies }) => {
 
     const [title, setTitle] = React.useState('')
     const [category, setCategory] = React.useState(false)
@@ -36,7 +37,7 @@ const AddMovie = () => {
     const [duration, setDuration] = React.useState(0)
 
     return (
-        <div className="add-content-admin">
+        <div className="add-content-admin add-movie-contaniner">
             <header>
                 <h3>Agregar Pelicula</h3>
             </header>
@@ -61,17 +62,18 @@ const AddMovie = () => {
                         <option value='Accion'>Accion</option>
                     </select>
 				</div>		
-                <TextInput set = {setReleaseDate} title='Ingrese fecha dd-mm-yyyy' className='add-movie-input'/> 
+                <TextInput set = {setReleaseDate} title='Ingrese fecha mm-dd-yyyy' className='add-movie-input'/> 
                 <TextInput set = {setLink} title='Ingrese Link' className='add-movie-input'/> 
                 <TextInput set = {setDuration} title='Ingrese duracion' className='add-movie-input'/> 
                 <button
                     className="default-button add-movie-button"
+                    type='button'
                     onClick={() => {
                         if (title == '' || genre == '' || releaseDate == '' || link == '' || duration == 0){
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAddMovie(title, category, genre, releaseDate, link, duration)
+                        handleAddMovie(title, category, genre, releaseDate, link, duration, setMovies)
                     }}
                 >
                     Agregar Pelicula

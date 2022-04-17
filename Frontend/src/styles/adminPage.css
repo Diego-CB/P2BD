@@ -17,7 +17,8 @@
     height: 100%;
     width: 24%;
     width: 260px;
-
+    
+    color:black;
     background-color: rgb(199, 199, 199);
     border-radius: 2%;
 
@@ -97,10 +98,6 @@
     grid-gap: 10px;
 }
 
-.content-admin-page > * {
-    background-color: red;
-}
-
 /* ver content */
 .ver-content-admin {
     height: 100%;
@@ -167,6 +164,10 @@
     align-items: center;
 }
 
+.add-movie-contaniner {
+    margin-bottom: -8px;
+}
+
 .add-content-admin form {
     display: flex;
     align-items: space-between;
@@ -209,4 +210,23 @@
 
 .add-movie-button {
     margin-top: 2px;
+}
+
+/* Alter Content */
+
+.alter-movie-input {
+    width: 80%;
+}
+
+.alter-movie-input input {
+    width: 90%;
+}
+
+.f1 {
+    margin-top: 20px;
+}
+
+/* Delete Content */
+.delete-content-admin {
+    margin-top: 10px;
 }

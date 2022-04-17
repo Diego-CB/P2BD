@@ -8,8 +8,8 @@ const TextInput = ({className, initValue, title, password, set}) => {
 		<div className={className}>
 			<h4>{title}</h4>
 			<input onChange={(event) => set(event.target.value)}
-			type={password} value={initValue}/> 
-		</div>		
+			type={password} value={initValue}/>
+		</div>
 	)
 }
 

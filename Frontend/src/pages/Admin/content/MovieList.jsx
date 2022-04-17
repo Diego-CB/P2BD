@@ -1,7 +1,6 @@
 import React from "react"
 
 const handleMovieList = (setMovies) => {
-    console.log('fetch')
     fetch('http://127.0.0.1:8000/movieList')
 	.then(response => response.json())
 	.then(result => {
@@ -13,9 +12,8 @@ const handleMovieList = (setMovies) => {
 	})
 }
 
-const MovieList = () => {
+const MovieList = ({ movies, setMovies }) => {
 
-    const [movies, setMovies] = React.useState([])
     movies.length == 0 && handleMovieList(setMovies)
 
     return (
