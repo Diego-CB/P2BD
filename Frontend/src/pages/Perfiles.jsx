@@ -40,6 +40,7 @@ const handlePlan = (username, setPlan) => {
 		})
     })
 	.then(response => response.json())
+	
 	.then (result => {
         //console.log(result)
 		if (!result.userExist) return alert('No se ha podido crear perfil')
@@ -52,6 +53,7 @@ const handlePlan = (username, setPlan) => {
 		alert('Error de conexion:( intente más tarde')
 	})
 }
+
 const handleDelete_Profile = (username,profile) => {
 	fetch('http://127.0.0.1:8000/deleteprofiles', {
 		headers: {
@@ -97,7 +99,7 @@ const handleUpdate = (username,plan) => {
 	})
 }
 
-const handleProfiles = (username,setProfile ) => {
+const handleUser_Profiles = (username, setProfile ) => {
 	fetch('http://127.0.0.1:8000/checkprofiles', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -108,12 +110,17 @@ const handleProfiles = (username,setProfile ) => {
 		})
     })
 	.then(response => response.json())
+	
 	.then (result => {
-		if (!result.userExist) return alert('No se ha podido crear perfil')
-		//const profile_user = result.username[0].profile.toString()
-		//console.log('Plannnn ' ,profile_user)
-		console.log(result.username)
-		setTimeout(setProfile, 100, profile_plan)
+        console.log(result)
+		if (!result.userExist) return alert('Error al cargar perfiles disponibles')
+		const profiles_user = result.username
+		let profiles = []
+		profiles_user.map((profile)=>{
+			profiles.push(profile.profile)
+		})
+		//console.log('Array: ', profiles)
+		setProfile(profiles)
 	})
 	.catch (error => {
 		console.error('Error al crear user', error)
@@ -133,8 +140,10 @@ const Perfiles = ({Username}) => {
 	const [disabletext, setDisableText] = React.useState(false);
 	const [disableProfile, setDisableProfile]= React.useState('');
 
-	handlePlan(Username, setPlan)
+	handlePlan(Username, setPlan);
 	console.log(plan)
+
+	handleUser_Profiles(Username,setProfile)
 	//console.log("conteo",count)
 	//console.log(disable, "estado")
 
@@ -185,12 +194,15 @@ const Perfiles = ({Username}) => {
     }
      return (
           <div className='main-div'>
-            <Header title= "Perfiles" user={Username}/>  
+            <Header title= "Perfiles" user={Username}/> 
+
             <div className='child-div'>
+
                 <div className="child-one">
                     <img src={personas} alt="person-logo" id="icon-person"/>
                     <h2 id="who-watching">¿Quien eres?</h2>
                 </div>
+
                 <div className="add-profile">
                     <input id="profile-input"
                             type="text" 
@@ -202,10 +214,13 @@ const Perfiles = ({Username}) => {
                     <button id="btn-add" 
                             title='Add Profile'
 							disabled={disable}
-                            onClick={()=> {AddProfile(),handleProfile(Username, nameProfile)}}
-                            
+                            onClick={()=> {
+										if (nameProfile == '') return alert('Ingrese nombre para crear un nuevo perfil')
+										AddProfile(),
+										handleProfile(Username, nameProfile)}}
                     > + </button>
                 </div>
+
                 <div className="show-profiles">
                     {profile.map((element,index) => {
                         return(
@@ -213,12 +228,16 @@ const Perfiles = ({Username}) => {
                                 <h4 id="name-use">{element}</h4>
                                 <button id="btn-remove" 
                                         title='Remove Profile'
-                                        onClick={() => {RemoveProfile(index),handleDelete_Profile(Username, disableProfile)}}> - </button>   
+                                        onClick={() => {
+											RemoveProfile(index),
+											handleDelete_Profile(Username, disableProfile)}}> 
+								- </button>   
                             </div>
                         )
                     })}
                     
                 </div>
+
                <div className="change-plan">
                    <select 
 						onChange={(event) => setUplan(event.target.value)}
@@ -232,11 +251,12 @@ const Perfiles = ({Username}) => {
 						if(Uplan=== '-1' || Uplan == -1) return alert('No se ha realizado un cabio en el plan')
 						handleUpdate(Username,Uplan)}}> Done </button>
                </div>
+
             </div>   
           </div>  
        
      )
-   }
+}
 
 
 export default Perfiles

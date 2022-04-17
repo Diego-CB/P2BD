@@ -14,6 +14,33 @@ form {
 }
 
 /* Sign In */
+#form-singin{
+    width: 500px;
+    height: 445px;
+    margin-top: 70px;
+    padding: 10px;
+}
+
+.main-content1 div {
+    width: 400px;
+    height: 300px;
+    margin-top: 30px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    
+
+    border-radius: 4%;
+
+    color: white;
+}
+
+.main-content > * {
+    color: white;
+}
+
 .main-content form {
     height: 420px;
 }
@@ -66,6 +93,7 @@ form button {
 }
 
 .button-C {
+    margin-bottom:38px;
     cursor:pointer;
 }
 

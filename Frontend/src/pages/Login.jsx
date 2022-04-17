@@ -53,7 +53,7 @@ const Login = ({ setIsRegis, setIsLogedIn,setUsername, setIsAdmin }) => {
 						<TextInput set = {setUsernameL} title='Ingrese Nombre de Usuario' className='userInput'/> 
 						<TextInput set = {setPasswordL} title='Ingrese Contraseña' className='userInput' password={true}/> 
 					</div>
-					<button type='button'  className='button-C'
+					<button type='button'  className='button-C2'
 						onClick ={() => {
 							if (usernameL == '' || passwordL == '') {
 								return alert('Llene los campos para continuar')

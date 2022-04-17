@@ -64,8 +64,8 @@ const SignIn = ({setIsRegis}) => {
 	return (
 		<div className = 'content'>
 			<Header title='Registro'/>
-			<div className='main-content'>
-				<form >
+			<div className='main-content1'>
+				<form id= 'form-singin'>
 					<TextInput set = {setEmail} title='Ingrese Correo' className='userInput'/> 
 					<TextInput set = {setUsername} title='Ingrese Nombre de Usuario' className='userInput'/> 
 					<TextInput set = {setPassword} title='Ingrese Contraseña' className='userInput' password={true}/> 
