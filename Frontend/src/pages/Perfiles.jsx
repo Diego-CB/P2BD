@@ -2,6 +2,7 @@ import React from "react";
 import Header from "../components/Header.jsx";
 import personas from '../images/persona.png'
 import setDocTitle from "../util/docTitle.js";
+import Homepage from './Homepage.jsx'
 
 import '../styles/profiles.css'
 
@@ -137,11 +138,13 @@ const Perfiles = ({Username}) => {
 	const [count, setCount]=React.useState(0);
 	const [Uplan, setUplan]= React.useState(-1);
     const [profile, setProfile] = React.useState([]);
+    const [aProfile, setAProfile] = React.useState([]);
 	const [disable, setDisable] = React.useState(false);
 	const [nameProfile, setNameprofile] = React.useState('');
 	const [disabletext, setDisableText] = React.useState(false);
 	const [disableProfile, setDisableProfile]= React.useState('');
 	const [disableProfile_plan, setDisableprofile_plan] = React.useState(false);
+	const [goToHomepage, setGoToHomepage] = React.useState(false)
 	
 	//console.log('plan',plan)
 	//console.log('up',Uplan)
@@ -228,7 +231,8 @@ const Perfiles = ({Username}) => {
 		//console.log('ADDDD',plan )
 	},[plan, size])
 
-     return (
+	if(goToHomepage) return <Homepage username={Username} profile={aProfile}/>
+    return (
           <div className='main-div'>
             <Header title= "Perfiles" user={Username}/> 
 
@@ -273,10 +277,15 @@ const Perfiles = ({Username}) => {
                             <div className= "show-each-profile" key={index}>
                                 <button id="name-use"
 										title='Go to content'
+										onClick={()=> {
+											setAProfile(profile[index])
+											setGoToHomepage(true)
+										}}
 								>{element}</button>
                                 <button id="btn-remove" 
                                         title='Remove Profile'
                                         onClick={() => {
+
 											if (disableProfile == '') return alert('Ingrese nombre para eliminar un perfil')
 											RemoveProfile(index),
 											handleDelete_Profile(Username, disableProfile)}}> 

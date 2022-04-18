@@ -1,0 +1,204 @@
+
+/* Homepage */
+
+.Welcome {
+    font-size: x-large;
+    font-weight: 600;
+    margin-top:1em;
+}
+
+.content-home {
+    background-color: rgb(20, 30, 61);
+    width: 100vw;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.main-content-homepage {
+    height: 100vh;
+    width: 90vw;
+    margin-bottom: 100px;
+    display: grid;
+    grid-template-areas: "Search-bar Search-bar"
+                        "Searched Searched"
+                       "ContinueWatching  WishList"
+                       "Movies  Movies"
+                       "Recomendations Recomendations";
+    grid-template-rows: 3fr 3fr 2fr 3fr 3fr;
+    grid-template-columns: 1fr 1fr;
+}
+
+.Search-bar{
+    /* background-color:rgba(250, 235, 215, 0.548); */
+    border-radius: 20px;
+    color: white;
+    grid-area: Search-bar;
+}
+
+.ContinueWatching {
+    height: 300px;
+    border-radius: 20px;
+    width: 95%;
+    background-color:rgba(250, 235, 215, 0.548);
+    color: white;
+    margin:1em;
+    grid-area: ContinueWatching;
+}
+
+.WishList {
+    height: 300px;
+    border-radius: 20px;
+    width: 95%;
+    background-color:rgba(250, 235, 215, 0.548);
+    color: white;
+    margin:1em;
+    grid-area: WishList;
+}
+
+.Movies {
+    background-color:rgba(250, 235, 215, 0.548);
+    border-radius: 20px;
+    color: white;
+    margin:1em;
+    grid-area: Movies;
+}
+
+h3 {
+    margin:1em;
+}
+
+/* SearchBar */
+#header-search {
+    width: 95%;
+    border-radius: 20px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    background-color:rgba(250, 235, 215, 0.548);
+    border-radius: 20px;
+    color: rgb(48, 48, 48);
+    grid-area: Search-bar;
+    font-size: medium;
+    margin-right: 10px;
+}
+
+.Search-btn {
+    width: 45px;
+    height: 45px;
+    margin-top: 30px;
+    margin-bottom: 60px;
+
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(101, 127, 207);
+    color:aliceblue;
+}
+
+.Search-btn:hover {
+    width: 45px;
+    height: 45px;
+    margin-top: 30px;
+
+    border: none;
+    border-radius: 50%;
+    background-color: rgb(27, 44, 95);
+    color:aliceblue;
+}
+
+/* Movies */
+.Movies-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.Movie-title {
+    margin-top: 2em;
+    margin-bottom: 1em;
+    /* margin-left: 50px; */
+    font-weight: 600;
+    color:aliceblue;
+}
+
+.Movie-pic {
+    width: 200px;
+    height: 326px;
+    margin-right: 10px;
+}
+
+.Movie {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+}
+
+.Movie-btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 25px;
+    width: 200px;
+    color:aliceblue;
+    border: none;
+    border-radius: 10px;
+    background-color: rgb(101, 127, 207);
+    margin-bottom: 3px;
+}
+
+.Movie-btn:hover {
+    background-color: rgb(74, 97, 166);
+}
+
+.favs {
+    margin-left: 30px;
+}
+
+.Search {
+    width:100%;
+    height:100%;
+    border: none;
+}
+
+.Searched {
+    height: 300px;
+    border-radius: 20px;
+    width: 97%;
+    background-color:rgba(250, 235, 215, 0.548);
+    color: white;
+    margin:1em;
+    margin-left:17px;
+    grid-area: Searched;
+}
+
+.Search-select {
+    width: 10%;
+    height: 30px;
+    margin-top: 30px;
+    text-align: center;
+    border: none;
+    background-color: rgb(101, 127, 207);
+    color:aliceblue;
+}
+
+.Recomendations {
+    height: 200px;
+    width: 97%;
+    border-radius: 20px;
+    background-color:rgba(250, 235, 215, 0.548);
+    color: white;
+    margin:1em;
+    margin-left:17px;
+    grid-area: Recomendations;
+}
+
+.Espacio {
+    height: 60px;
+    width: 97%;
+}

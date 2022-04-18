@@ -993,3 +993,351 @@ app.post('/getDateTop', (req, res) => {
 		})
 	})
 })
+
+
+app.post('/moviesList', (req, res) => {
+
+    const sql = `SELECT * FROM contenido`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				movies: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/getFavorites', (req, res) => {
+
+    const sql = `SELECT c.title FROM profile_favorites pf JOIN contenido c ON pf.id_content = c.id_content WHERE pf.profile = (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1)`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				favorites: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/addFavorite', (req, res) => {
+
+    const sql = `INSERT INTO public.profile_favorites
+	(id_content, profile)
+	VALUES(${req.body.id_content},(SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1))`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				sucesss: true
+			})
+		})
+	})
+})
+
+
+app.post('/updateState', (req, res) => {
+
+    const sql = `UPDATE public.user_profiles SET estado=true WHERE username='${req.body.username}' AND id_profile= (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1)`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				sucesss: true
+			})
+		})
+	})
+})
+
+
+app.post('/updateStateFalse', (req, res) => {
+
+    const sql = `UPDATE public.user_profiles SET estado=false WHERE username='${req.body.username}' AND id_profile= (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1)`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				sucesss: true
+			})
+		})
+	})
+})
+
+
+app.post('/tomarEstado', (req, res) => {
+
+    const sql = `SELECT estado FROM user_profiles WHERE username='${req.body.username}' AND id_profile= (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1)`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				sucesss: true,
+				estado: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/subirVisualizacion', (req, res) => {
+
+	const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile) VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1))`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				sucesss: true,
+			})
+		})
+	})
+})
+
+
+app.post('/ContinuarViendo', (req, res) => {
+
+    // const sql = `SELECT estado FROM user_profiles WHERE id_content='${req.body.id_content}' AND profile= (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1)`
+	// const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile) VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1))`
+	const sql = `SELECT DISTINCT c.title FROM movie_data md JOIN contenido c ON c.id_content = md.id_content WHERE md.profile = (SELECT up.id_profile FROM user_profiles up WHERE up.username = '${req.body.username}' AND up.profile = '${req.body.profile}' LIMIT 1) AND ((extract(minute FROM (select md.finished::time - md.started::time)))::int + ((extract(hour FROM (select md.finished::time - md.started::time)))*60)::int) < c.min_duration`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				continue: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchActor', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c JOIN casting ca ON c.id_content = ca.id_content JOIN actors a ON ca.id_actor = a.id_actor WHERE a.actor LIKE '%${req.body.nameactor}%'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchDirector', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c JOIN director d ON c.id_content = d.id_content WHERE d.director LIKE '%${req.body.nameactor}%'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchCategory', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c WHERE c.category = ${req.body.nameactor}`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchTitle', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c WHERE c.title LIKE '%${req.body.nameactor}%'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchGenero', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c WHERE c.genre LIKE '%${req.body.nameactor}%'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchFecha', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c WHERE c.release_date = '${req.body.nameactor}'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/SearchPremios', (req, res) => {
+
+	const sql = `SELECT c.title FROM contenido c JOIN awards a ON c.id_content = a.id_content  WHERE a.premio LIKE '%${req.body.nameactor}%'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/Recomendations', (req, res) => {
+
+	const sql = `SELECT * FROM contenido c1 WHERE c1.genre = (SELECT DISTINCT c.genre FROM contenido c JOIN movie_data md ON md.id_content = c.id_content WHERE md.profile = (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1) Limit 1)`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				tamano: result.rows.length > 0,
+				moviess: result.rows
+			})
+		})
+	})
+})
+
+
+app.post('/Anuncio', (req, res) => {
+
+	const sql = `SELECT * FROM Ad  LIMIT 1`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				ad: result.rows
+			})
+		})
+	})
+})
+
+
