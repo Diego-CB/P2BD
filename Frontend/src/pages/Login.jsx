@@ -7,7 +7,10 @@ import MD5 from '../../node_modules/crypto-js/md5.js'
 import setDocTitle from "../util/docTitle.js";
 
 
+
+
 const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername, setIsAdmin) => {
+	
 	fetch('http://127.0.0.1:8000/login', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -18,20 +21,43 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername, 
 			password: MD5(password).toString(),
 		})
     })
+
 	.then(response => response.json())
 	.then (result => {
-		if (!result.userExist) return alert('Usuario no encontrado')
-		// alert('Bienvenido!')
-		const user = result.username[0].username.toString()
-		const admin = result.username[0].administrador
-		setIsRegis(false)
-		setIsLogedIn(true)
-		setUsername(user)
-		setIsAdmin(admin)
+		if (result.userExist){
+			const user = result.username[0].username.toString()
+			const admin = result.username[0].administrador
+			setIsRegis(false)
+			setIsLogedIn(true)
+			setUsername(user)
+			setIsAdmin(admin)
+		} else{
+
+		fetch('http://127.0.0.1:8000/checkLogin', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			username,
+			password: MD5(password).toString(),	
+			})
+		})
+	
+	.then(response => response.json())
+	.then (result => {
+		
+		if (result.success )return alert('Usuario no encontrado') 
+		console.log(result.success)
 		//setTimeout(setIsRegis, 2000, false)
 		//setTimeout(setIsLogedIn, 100, true)
 		//setTimeout(setUsername, 100, user)
 	})
+	.catch (error => {
+		console.error('Error al intentar loggear', error)
+		alert('Error de conexion: intente más tarde')
+	})
+	}})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
 		alert('Error de conexion: intente más tarde')

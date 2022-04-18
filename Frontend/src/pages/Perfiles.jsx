@@ -69,6 +69,7 @@ const handleDelete_Profile = (username,profile) => {
 	.then (result => {
 		if (!result.success) return alert('No se ha podido eliminar perfil')
 		//console.log(result.username)
+		console.log('helo',username,profile)
 		alert('Perfil eliminado con exito')
 	})
 	.catch (error => {
@@ -142,10 +143,7 @@ const Perfiles = ({Username}) => {
 	const [disableProfile_plan, setDisableprofile_plan] = React.useState(false);
 	
 	console.log('plan',plan)
-	console.log('profile',profile)
-	
-
-	
+	//console.log('profile',profile)
 	console.log("conteo",count)
 	//console.log(disable, "estado")
 
@@ -193,18 +191,17 @@ const Perfiles = ({Username}) => {
 			return index == ind;
 			
         })
-		console.log('aqqqqi',delprofile)
-		
+
 		setDisableProfile(delprofile.toString())
 
 		const updateProfile =profile.filter((element,index) =>{
 			return index !== ind;
 			
         })
-		console.log('aqi',updateProfile)
-        setProfile(updateProfile);
 
-		
+        setProfile(updateProfile);
+		setDisableProfile('')
+
     }
 
 	
@@ -244,7 +241,17 @@ const Perfiles = ({Username}) => {
                     > + </button>
                 </div>
 
+				<div className= "removed-profile">
+					 <input id="delete-input"
+                            type="text" 
+                            placeholder="Perfil a eliminar ..." 
+                            value={disableProfile} 
+                            onChange={(event) => setDisableProfile(event.target.value)}>
+                    </input>
+				</div>
+
                 <div className="show-profiles">
+
                     {profile.map((element,index) => {
                         return(
                             <div className= "show-each-profile" key={index}>
@@ -254,6 +261,7 @@ const Perfiles = ({Username}) => {
                                 <button id="btn-remove" 
                                         title='Remove Profile'
                                         onClick={() => {
+											if (disableProfile == '') return alert('Ingrese nombre para eliminar un perfil')
 											RemoveProfile(index),
 											handleDelete_Profile(Username, disableProfile)}}> 
 								- </button>   

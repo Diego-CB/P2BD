@@ -100,6 +100,30 @@ app.post('/login', (req, res) => {
 	})
 })
 
+app.post('/checkLogin', (req, res) => {  
+		
+	const sql = `
+		INSERT INTO bad_login (username, user_password) 
+        VALUES (
+            '${req.body.username}', 
+            '${req.body.password}'
+        )`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: false })
+		})
+	})
+})
+
+// Perfiles
+
 app.post('/checkplan', (req, res) => {
 
 	const sql = `SELECT * FROM users WHERE username = '${req.body.username}'`
@@ -121,8 +145,6 @@ app.post('/checkplan', (req, res) => {
 		})
 	})
 })
-
-// Perfiles
 
 app.post('/profiles', (req, res) => {  
 		
@@ -201,6 +223,27 @@ app.post('/checkprofiles', (req, res) => {
 		})
 	})
 })
+
+app.post('/profiledisable', (req, res) => {  
+		
+	const sql = `UPDATE user_profiles SET habilitado = false 
+				WHERE username = '${req.body.username}' AND profile = '${req.body.profile}'`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true})
+		})
+	})
+})
+
+
+//Admin 
 
 app.get('/movieList', (req, res) => {
 	const sql = 'SELECT id_content, title, genre, CAST(release_date as TEXT) FROM contenido'
