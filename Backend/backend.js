@@ -1323,7 +1323,7 @@ app.post('/Recomendations', (req, res) => {
 
 app.post('/Anuncio', (req, res) => {
 
-	const sql = `SELECT * FROM Ad  LIMIT 1`
+	const sql = `select * from ad ORDER BY RANDOM() LIMIT 1`
     const client = new pg.Client(conString)
 
 	client.connect((err) => {

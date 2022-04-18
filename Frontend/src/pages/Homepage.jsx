@@ -384,7 +384,7 @@ const handleAnuncios= ( setAdAnuncio ) => {
 	.then(response => response.json())
 	.then (result => {
         setAdAnuncio(result.ad[0].message)
-        console.log(result.ad[0].message)
+        alert('ad: ' + result.ad[0].message);
 	})
 	.catch (error => {
 		console.error('Error en handleRecomendations', error)
@@ -415,10 +415,10 @@ const Homepage = ({username, profile}) => {
         setInterval(
             function(){
                 const adAlert = handleAnuncios(setAdAnuncio);
-                alert('ad: ' + adAnuncio);
             }
-            ,6000
-            );
+            ,600000
+        );
+
         }, [])
 
     const images = [Titanic, Shrek1, Ratatouille, SecondAct, KickButtowski, TheMessanger]
