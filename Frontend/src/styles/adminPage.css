@@ -150,7 +150,6 @@
 
 .row-content p {
     border-bottom: solid black 1px;
-    text-align: center;
     padding-left: 10px;
 }
 
@@ -332,4 +331,22 @@
 .delete-user-admin {
     width: 100%;
     height: 62.5%;
+}
+
+/* ------ admin ads ------ */
+.ads-table-headers {
+    grid-template-columns: 0.2fr 0.5fr 1fr;
+}
+
+.ads-row-content {
+    grid-template-columns: 0.2fr 0.5fr 1fr 0.001fr;
+}
+
+/* ------ admin announce ------ */
+.announce-table-headers {
+    grid-template-columns: 0.45fr 1fr;
+}
+
+.announce-row-content {
+    grid-template-columns: 0.5fr 1fr 0.001fr;
 }

@@ -19,7 +19,7 @@ const getSpecs = (type) => {
         'Reproducciones por categoria',
         'Top 10 de directores y actores',
         'Numero de cuentas avanzadas',
-        'Hora pica de servicio'
+        'Hora pico de servicio'
     ]
 }
 
@@ -60,7 +60,7 @@ import setDocTitle from '../util/docTitle.js'
 import AdminAdds from './Admin/Anuncios/AdminAdds.jsx'
 import AdminContent from './Admin/content/AdminContent.jsx'
 import AdminUsers from './Admin/users/AdminUsers.jsx'
-import AdminReports from './Admin/AdminReports.jsx'
+import AdminReports from './Admin/Reports/AdminReports.jsx'
 
 const AdminPage = ({ username }) => {
     setDocTitle('Admin')

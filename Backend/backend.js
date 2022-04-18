@@ -465,4 +465,193 @@ app.post('/deleteProfile', (req, res) => {
 	})
 })
 
+app.get('/adsList', (req, res) => {
+	const sql = 'SELECT * FROM ad'
+	const client = new pg.Client(conString)
 
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+//newAdd
+
+app.post('/newAdd', (req, res) => {  
+		
+	const sql = `
+		INSERT INTO ad (announcer_id, message) VALUES (
+			${req.body.announcer}, 
+			'${req.body.message}'
+		)`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false })
+			}
+			res.json({ success: true })
+		})
+	})
+})
+
+
+app.post('/alterAd', (req, res) => {  
+		
+	const sql = `
+		UPDATE ad
+		SET ${req.body.category} = ${req.body.newValue}
+		WHERE ad_id = ${req.body.ad}
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+
+app.post('/deleteAdd', (req, res) => {  
+		
+	const sql = `DELETE FROM ad WHERE ad_id = ${req.body.ad}`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.get('/announcerList', (req, res) => {
+	const sql = 'SELECT * FROM announcer'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+
+app.post('/newAnnouncer', (req, res) => {  
+		
+	const sql = `INSERT INTO announcer (a_name) VALUES ('${req.body.announcer}')`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false })
+			}
+			res.json({ success: true })
+		})
+	})
+})
+
+//alterAnnouncer
+app.post('/alterAnnouncer', (req, res) => {  
+		
+	const sql = `
+		UPDATE announcer
+		SET a_name = '${req.body.newValue}'
+		WHERE announcer_id = ${req.body.announcer}
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/deleteAnnouncer', (req, res) => {  
+		
+	const sql = `DELETE FROM announcer WHERE announcer_id = ${req.body.announcer}`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})

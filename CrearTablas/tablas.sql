@@ -92,7 +92,7 @@ CREATE TABLE ad (
 	announcer_id int,
 	message varchar,
 	PRIMARY KEY (ad_id, announcer_id),
-	FOREIGN KEY (announcer_id) REFERENCES announcer (announcer_id)
+	FOREIGN KEY (announcer_id) REFERENCES announcer (announcer_id) ON DELETE CASCADE 
 );
 
 

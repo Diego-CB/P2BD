@@ -3,7 +3,7 @@ import HomeAdd from "./Add/HomeAdd.jsx"
 import HomeAnouncer from "./Anouncer/HomeAnouncer.jsx"
 import Header from "../../../components/Header.jsx"
 
-const AdminAdds = ({ username }) => {
+const AdminAdds = ({ username, setAdminShow }) => {
 
     const [toggleAdds,setToggleAdds] = React.useState(0)
 
