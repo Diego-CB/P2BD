@@ -396,7 +396,7 @@ const handleAnuncios= ( setAdAnuncio ) => {
 // -------- MAIN HOMEPAGE --------
 const Homepage = ({username, profile}) => {
 
-    const [adAnuncio, setAdAnuncio] = React.useState('Hola!')
+    const [adAnuncio, setAdAnuncio] = React.useState('El sabor Chapin')
     const [movies, setMovies] = React.useState('')
     const [startTime, setStartTime] = React.useState(0)
     const [estado, setEstado] = React.useState(false)
