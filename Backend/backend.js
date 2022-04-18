@@ -290,9 +290,6 @@ app.post('/alterMovie', (req, res) => {
 	})
 })
 
-//DELETE FROM table_name WHERE condition
-
-
 app.post('/deleteMovie', (req, res) => {  
 		
 	const sql = `DELETE FROM contenido WHERE id_content = ${req.body.idContent}`
@@ -314,3 +311,158 @@ app.post('/deleteMovie', (req, res) => {
 		})
 	})
 })
+
+
+app.get('/userList', (req, res) => {
+	const sql = 'SELECT username, email, plan, administrador, habilitado FROM users'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
+app.post('/alterUser', (req, res) => {  
+		
+	const sql = `
+		UPDATE users
+		SET ${req.body.category} = ${req.body.newValue}
+		WHERE username = '${req.body.username}'
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/deleteUser', (req, res) => {  
+		
+	const sql = `DELETE FROM users WHERE username = '${req.body.username}'`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+
+app.get('/profileList', (req, res) => {
+	const sql = 'SELECT * FROM user_profiles'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
+app.post('/checkProfileExist', (req, res) => {  
+		
+	const sql = `select * from user_profiles WHERE id_profile = ${req.body.id_perfil}`
+	const client = new pg.Client(conString)
+
+	console.log(sql)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ 
+				exist: result.rowCount > 0
+			})
+		})
+	})
+})
+
+//alterProfile
+app.post('/alterProfile', (req, res) => {  
+		
+	const sql = `
+		UPDATE user_profiles
+		SET ${req.body.category} = ${req.body.newValue}
+		WHERE id_profile = ${req.body.id_perfil}
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+
+app.post('/deleteProfile', (req, res) => {  
+		
+	const sql = `DELETE FROM user_profiles WHERE id_profile = ${req.body.id_profile}`
+	const client = new pg.Client(conString)
+
+	console.log(sql)
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+
