@@ -699,6 +699,130 @@ app.post('/deleteAnnouncer', (req, res) => {
 	})
 })
 
+app.post('/checkActorExist', (req, res) => {  
+		
+	const sql = `SELECT * FROM actors WHERE actor = '${req.body.actor}'`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				exist: result.rowCount > 0
+			})
+		})
+	})
+})
+
+app.post('/addActor', (req, res) => {  
+		
+	const sql = `INSERT INTO actors(actor) VALUES ('${req.body.actor}')`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/alterActor', (req, res) => {  
+		
+	const sql = `
+		UPDATE actors
+		SET actor = '${req.body.newValue}'
+		WHERE id_actor = ${req.body.actor}
+	`
+
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/addDirector', (req, res) => {  
+		
+	const sql = `INSERT INTO director(id_content, director) VALUES (
+		${req.body.proyect},
+		'${req.body.director}'
+		)`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/alterDirector', (req, res) => {  
+		
+	const sql = `
+		UPDATE director
+		SET ${req.body.select} = ${req.body.newValue}
+		WHERE id_content = ${req.body.proyect} AND director = '${req.body.director}'
+	`
+
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+
 
 // ------ Querys de reporteria --------
 

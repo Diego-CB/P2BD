@@ -389,3 +389,10 @@
     grid-template-columns: 1fr;
     text-align: center;
 }
+
+.d1 {
+    width: 72%;
+}
+.d1 input{
+    width: 100%;
+}
