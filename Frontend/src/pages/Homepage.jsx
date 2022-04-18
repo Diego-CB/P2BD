@@ -415,9 +415,9 @@ const Homepage = ({username, profile}) => {
         setInterval(
             function(){
                 const adAlert = handleAnuncios(setAdAnuncio);
-                alert({adAnuncio});
+                alert('ad: ' + adAnuncio);
             }
-            ,600000
+            ,6000
             );
         }, [])
 
