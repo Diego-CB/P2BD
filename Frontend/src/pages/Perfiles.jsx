@@ -69,7 +69,7 @@ const handleDelete_Profile = (username,profile) => {
 	.then (result => {
 		if (!result.success) return alert('No se ha podido eliminar perfil')
 		//console.log(result.username)
-		console.log('helo',username,profile)
+		//console.log('helo',username,profile)
 		alert('Perfil eliminado con exito')
 	})
 	.catch (error => {
@@ -90,7 +90,8 @@ const handleUpdate = (username,plan) => {
 		})
     })
 	.then(response => response.json())
-	.then (result => {console.log(plan)
+	.then (result => {
+		//console.log(plan)
 		if (!result.success) return alert('No se ha podido cambiar plan')
 		alert('Cambio realizado con exito')
 	})
@@ -142,12 +143,13 @@ const Perfiles = ({Username}) => {
 	const [disableProfile, setDisableProfile]= React.useState('');
 	const [disableProfile_plan, setDisableprofile_plan] = React.useState(false);
 	
-	console.log('plan',plan)
+	//console.log('plan',plan)
+	//console.log('up',Uplan)
 	//console.log('profile',profile)
-	console.log("conteo",count)
+	//console.log("conteo",count)
 	//console.log(disable, "estado")
 
-	 
+	let size = profile.length
 
     const AddProfile = () =>{
         if(!nameProfile){
@@ -162,7 +164,7 @@ const Perfiles = ({Username}) => {
                 }   
             }
             if(plan === '1'){
-                if (count >=3){
+                if (count >=3 ){
                   StopAdd();
                }
            }
@@ -174,13 +176,12 @@ const Perfiles = ({Username}) => {
         }
 
     }
-
+	
 	const StopAdd =()=>{
 		setDisable(true)
 		setDisableText(true)
 		alert("Este es el último perfil disponible")
 	}
-
 
     const RemoveProfile = (ind) =>{
 		setCount((count-1));
@@ -201,16 +202,31 @@ const Perfiles = ({Username}) => {
 
         setProfile(updateProfile);
 		setDisableProfile('')
-
     }
 
-	
-	console.log('disablep',disableProfile)
+
 
 	React.useEffect(() =>{
 		handlePlan(Username, setPlan);
 		handleUser_Profiles(Username,setProfile)
 	 },[])
+
+	 React.useEffect(() =>{
+		if(plan === "0" && size >= 1){
+			setDisable(true)
+			setDisableText(true)
+		} else if (plan ==="1" && size >= 4) {
+			setDisable(true)
+			setDisableText(true)
+		} else if( plan==='2' && size ===8){
+			setDisable(true)
+			setDisableText(true)
+		}else{
+			setDisable(false)
+			setDisableText(false)
+		}
+		//console.log('ADDDD',plan )
+	},[plan, size])
 
      return (
           <div className='main-div'>
@@ -282,9 +298,12 @@ const Perfiles = ({Username}) => {
 					</select>
 					<button id= 'btn-changePlan' onClick={()=> {
 						if(Uplan=== '-1' || Uplan == -1) return alert('No se ha realizado un cabio en el plan')
-						handleUpdate(Username,Uplan)}}> Done </button>
+						handleUpdate(Username,Uplan)
+						setPlan(Uplan)
+						}}
+					> Done </button>
+						
                </div>
-
             </div>   
           </div>  
        
