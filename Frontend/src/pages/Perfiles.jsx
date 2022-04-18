@@ -112,8 +112,8 @@ const handleUser_Profiles = (username, setProfile ) => {
 	.then(response => response.json())
 	
 	.then (result => {
-        console.log(result)
-		if (!result.userExist) return alert('Error al cargar perfiles disponibles')
+        //console.log(result)
+		//if (!result.userExist) return alert('Error al cargar perfiles disponibles')
 		const profiles_user = result.username
 		let profiles = []
 		profiles_user.map((profile)=>{
@@ -139,15 +139,18 @@ const Perfiles = ({Username}) => {
 	const [nameProfile, setNameprofile] = React.useState('');
 	const [disabletext, setDisableText] = React.useState(false);
 	const [disableProfile, setDisableProfile]= React.useState('');
+	const [disableProfile_plan, setDisableprofile_plan] = React.useState(false);
+	
+	console.log('plan',plan)
+	console.log('profile',profile)
+	
 
-	handlePlan(Username, setPlan);
-	console.log(plan)
-
-	handleUser_Profiles(Username,setProfile)
-	//console.log("conteo",count)
+	
+	console.log("conteo",count)
 	//console.log(disable, "estado")
 
 	 
+
     const AddProfile = () =>{
         if(!nameProfile){
             alert('Ingrese un nombre para el nuevo perfil')
@@ -180,18 +183,38 @@ const Perfiles = ({Username}) => {
 		alert("Este es el último perfil disponible")
 	}
 
+
     const RemoveProfile = (ind) =>{
 		setCount((count-1));
         setDisable(false);
 		setDisableText(false);
+		
+		const delprofile =profile.filter((element,index) =>{
+			return index == ind;
+			
+        })
+		console.log('aqqqqi',delprofile)
+		
+		setDisableProfile(delprofile.toString())
 
 		const updateProfile =profile.filter((element,index) =>{
-			setDisableProfile(element)
 			return index !== ind;
 			
         })
+		console.log('aqi',updateProfile)
         setProfile(updateProfile);
+
+		
     }
+
+	
+	console.log('disablep',disableProfile)
+
+	React.useEffect(() =>{
+		handlePlan(Username, setPlan);
+		handleUser_Profiles(Username,setProfile)
+	 },[])
+
      return (
           <div className='main-div'>
             <Header title= "Perfiles" user={Username}/> 
@@ -225,14 +248,16 @@ const Perfiles = ({Username}) => {
                     {profile.map((element,index) => {
                         return(
                             <div className= "show-each-profile" key={index}>
-                                <h4 id="name-use">{element}</h4>
+                                <button id="name-use"
+										title='Go to content'
+								>{element}</button>
                                 <button id="btn-remove" 
                                         title='Remove Profile'
                                         onClick={() => {
 											RemoveProfile(index),
 											handleDelete_Profile(Username, disableProfile)}}> 
 								- </button>   
-                            </div>
+							</div>
                         )
                     })}
                     
