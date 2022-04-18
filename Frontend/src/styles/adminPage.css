@@ -350,3 +350,42 @@
 .announce-row-content {
     grid-template-columns: 0.5fr 1fr 0.001fr;
 }
+
+/* ------ admin reports ------ */
+.admin-reports {
+    display: flex;
+    flex-direction: column;
+}
+
+.top10-table-headers {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+}
+
+.top10-table-content {
+    width: 100%;
+    grid-template-columns: 1fr 1fr;
+    text-align: center;
+}
+
+.CatR-table-headers {
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+}
+
+.CatR-table-content {
+    width: 100%;
+    grid-template-columns: 1fr 1fr 1fr;
+    text-align: center;
+}
+
+.qc-table-headers {
+    width: 100%;
+    grid-template-columns: 1fr;
+}
+
+.qc-table-content {
+    width: 100%;
+    grid-template-columns: 1fr;
+    text-align: center;
+}

@@ -698,3 +698,174 @@ app.post('/deleteAnnouncer', (req, res) => {
 		})
 	})
 })
+
+
+// ------ Querys de reporteria --------
+
+app.get('/top10Genres', (req, res) => {
+	const sql = `
+		SELECT c.genre, sum(c.min_duration) AS total_consumido 
+			FROM contenido c
+			NATURAL JOIN movie_data m
+			WHERE m.started >= '01-01-2022' and m.finished <= '12-31-2022'
+			GROUP BY c.genre
+			ORDER BY total_consumido 
+			DESC LIMIT 10
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+
+app.get('/categoryReproduc', (req, res) => {
+	const sql = `
+	SELECT COUNT(*) AS reproducciones, c.category AS isMovie, u.plan
+		FROM contenido c
+		NATURAL JOIN movie_data m
+		JOIN user_profiles up ON m.profile = up.id_profile
+		NATURAL JOIN users u
+		WHERE m.started >= '01-01-2022' and m.finished <= '12-31-2022'
+		GROUP BY u.plan, c.category
+		ORDER BY reproducciones DESC
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+/*
+
+*/
+
+app.get('/top10Cast', (req, res) => {
+	const sql = `
+	select d.director, a.actor, count(*) as apariciones
+		from actors a
+		natural join casting ca
+		natural join director d
+		natural join contenido c
+		natural join movie_data m
+		natural join director
+		join user_profiles up on m.profile = up.id_profile
+		natural join users u
+		where u.plan = 0
+		group by a.actor, d.director
+		order by apariciones
+		limit 10
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+app.get('/cantidadCuentas', (req, res) => {
+	const sql = `
+	select COUNT(*) as cantidad 
+		from users u
+		natural join user_profiles up
+		join movie_data m on up.id_profile = m.profile
+		where u.plan = 0 and started >= '11-01-2021'
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
+
+/*
+
+*/
+
+app.post('/getDateTop', (req, res) => {  
+		
+	const sql = `
+	select count(*) as conteo , extract(hour from started) as hora from movie_data
+		where started >= '${req.body.date} 00:00:00' and started <= '${req.body.date} 11:59:59'
+		group by hora
+		order by conteo
+		limit 1
+	`
+	console.log(sql, '\n')
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				list: result.rows,
+				success: true
+			})
+		})
+	})
+})
