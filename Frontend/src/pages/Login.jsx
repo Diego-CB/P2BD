@@ -47,7 +47,7 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername, 
 	.then(response => response.json())
 	.then (result => {
 		
-		if (result.success )return alert('Usuario no encontrado') 
+		if (!result.success )return alert('Usuario no encontrado') 
 		console.log(result.success)
 		//setTimeout(setIsRegis, 2000, false)
 		//setTimeout(setIsLogedIn, 100, true)

@@ -117,7 +117,7 @@ app.post('/checkLogin', (req, res) => {
 		client.query(sql, (err, result) => {
 			if(err) return console.error('error running query', err)
 			client.end()
-			res.json({ success: false })
+			res.json({ success: true })
 		})
 	})
 })
