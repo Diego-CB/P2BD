@@ -15,6 +15,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const pg = require('pg')
+const { createAdmin } = require('./controllers/Admin')
 
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
@@ -27,6 +28,8 @@ app.use(cors())
 app.listen(8000, () => {
     console.log('Corrio en 8000 :D')
 })
+
+app.post('/createAdmin', createAdmin)
 
 app.get('/', (req, res) => {
     res.send('Hello World')

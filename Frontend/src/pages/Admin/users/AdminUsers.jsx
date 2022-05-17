@@ -2,9 +2,10 @@ import React from "react"
 import Header from '../../../components/Header.jsx'
 import HomeAProfile from "./AdminProfile/HomeAProfile.jsx"
 import HomeAUser from "./AdminUser/HomeAUser.jsx"
+import CreateAdmin from "./AdminUser/CreateAdmin.jsx"
 const AdminUsers = ({ setAdminShow, username }) => {
 
-    const [toggleUsers,setToglleUsers] = React.useState(0)
+    const [toggleUsers, setToglleUsers] = React.useState(0)
 
     return (
         <div className = 'content'>
@@ -25,11 +26,20 @@ const AdminUsers = ({ setAdminShow, username }) => {
                         >
                             Administrar perfiles 
                         </button>
+                        <button className="default-button"
+                            type='button'
+                            onClick={() => setToglleUsers(3)}
+                        >
+                            Crear Administradores 
+                        </button>
                     </div>
 
                 : (toggleUsers == 1 
                     ? <HomeAUser/>
-                    : <HomeAProfile/>
+                    : (toggleUsers == 2 
+                        ? <HomeAProfile/> 
+                        : <CreateAdmin/>
+                    )
                 )
             }</div>
             <footer className="admin-footer">
