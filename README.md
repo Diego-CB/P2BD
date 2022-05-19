@@ -5,7 +5,7 @@
 
 # Tecnologias Utilizadas
 - ⚛ React
--  Webpack
+- ⚙ Webpack
 - 📡 Express
 - 🕹 NodeJs
 - 🐘 PostgreSQL
