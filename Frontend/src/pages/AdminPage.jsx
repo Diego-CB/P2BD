@@ -21,6 +21,9 @@ const getSpecs = (type) => {
         'Numero de cuentas avanzadas',
         'Hora pico de servicio'
     ]
+    if (type === 'Simulaciones') return [
+        'Simular visualizaciones de un día',
+    ]
 }
 
 const getAdminPath = (type) => {
@@ -28,6 +31,7 @@ const getAdminPath = (type) => {
     if (type === 'Usuarios') return 2
     if (type === 'Anuncios') return 3
     if (type === 'Reporteria') return 4
+    if (type === 'Simulacion') return 5
 }
 
 const AdminOption = ({ title, setAdminShow }) => {
@@ -81,6 +85,8 @@ const AdminPage = ({ username }) => {
                     <AdminOption setAdminShow={setAdminShow} title={'Usuarios'}/>
                     <AdminOption setAdminShow={setAdminShow} title={'Anuncios'}/>
                     <AdminOption setAdminShow={setAdminShow} title={'Reporteria'}/>
+                    <AdminOption setAdminShow={setAdminShow} title={'Simulaciones'}/>
+                   
                 </div>
             </div>
         </div>
