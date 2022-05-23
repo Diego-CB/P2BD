@@ -867,7 +867,7 @@ app.get('/categoryReproduc', (req, res) => {
 		FROM contenido c
 		NATURAL JOIN movie_data m
 		JOIN user_profiles up ON m.profile = up.id_profile
-		NATURAL JOIN users u
+		JOIN users u ON u.username = up.username
 		WHERE m.started >= '01-01-2022' and m.finished <= '12-31-2022'
 		GROUP BY u.plan, c.category
 		ORDER BY reproducciones DESC
@@ -907,7 +907,7 @@ app.get('/top10Cast', (req, res) => {
 		natural join movie_data m
 		natural join director
 		join user_profiles up on m.profile = up.id_profile
-		natural join users u
+		join users u on u.username = up.username
 		where u.plan = 0
 		group by a.actor, d.director
 		order by apariciones
