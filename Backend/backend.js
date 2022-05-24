@@ -16,6 +16,7 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const pg = require('pg')
 const { createAdmin } = require('./controllers/Admin')
+const { top5Content } = require('./controllers/Reports2')
 
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
@@ -29,11 +30,11 @@ app.listen(8000, () => {
     console.log('Corrio en 8000 :D')
 })
 
-app.post('/createAdmin', createAdmin)
+// Reporteria parte 2
+app.post('/top5Content', top5Content)
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+
+app.post('/createAdmin', createAdmin)
 
 // Registro de nuevos usuarios
 

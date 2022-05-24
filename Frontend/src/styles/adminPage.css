@@ -94,7 +94,6 @@
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: 290px 290px;
-    grid-template-rows: calc(100vh - 74%);
     grid-gap: 10px;
 }
 

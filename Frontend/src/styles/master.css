@@ -9,7 +9,7 @@
 .content {
     background-color: rgb(20, 30, 61);
     width: 100vw;
-    height: 100vh;
+    min-height: 100vh;
 
     display: flex;
     flex-direction: column;
