@@ -392,6 +392,29 @@ const handleAnuncios= ( setAdAnuncio ) => {
 	})
 }
 
+const handleSetFinishedMovie = ( profile, content, username ) => {
+	fetch('http://127.0.0.1:8000/setFinishedMovie', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			content,
+			profile,
+			username,
+		})
+	})
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return alert('Error de conexion')
+		console.log('Finalizada la pelicula')
+	})
+	.catch (error => {
+		console.error('Error en handleRecomendations', error)
+		alert('Server connection problem at handleRecomendations')
+	})
+}
+
 
 // -------- MAIN HOMEPAGE --------
 const Homepage = ({username, profile}) => {
@@ -530,17 +553,8 @@ const Homepage = ({username, profile}) => {
                                 }}>Detener película</button>
 
                                 <button className="Movie-btn" onClick={() => {
-                                    if (estado == true) {
-                                        const now = new Date();
-                                        const time = movie.min_duration * 60000
-                                        const StopTime = new Date(now.getTime() + time).toISOString()
-                                        console.log('Stop: ', StopTime)
-                                        console.log('Start: ', startTime)
-                                        handleSubirVisualizacion(movie.id_content, startTime, StopTime, username, profile)
-                                        handleUpdateStateFalse(username, profile, setEstado)
-                                    }
-                                    console.log('Finish: ', FinishTime)
-                                    //Llamar función de fetch
+																	handleSetFinishedMovie( profile, movie.id_content, username)
+																	//Llamar función de fetch
                                 }}>Finalizar película</button>
 
                                 <button className="Movie-btn" onClick={() => {

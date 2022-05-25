@@ -16,7 +16,10 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const pg = require('pg')
 const { createAdmin } = require('./controllers/Admin')
-const { top5Content } = require('./controllers/Reports2')
+const { 
+	top5Content, 
+	setFinishedMovie 
+} = require('./controllers/Reports2')
 
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
@@ -32,6 +35,7 @@ app.listen(8000, () => {
 
 // Reporteria parte 2
 app.post('/top5Content', top5Content)
+app.post('/setFinishedMovie', setFinishedMovie)
 
 
 app.post('/createAdmin', createAdmin)
@@ -1124,8 +1128,12 @@ app.post('/tomarEstado', (req, res) => {
 
 app.post('/subirVisualizacion', (req, res) => {
 
-	const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile) VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1))`
-    const client = new pg.Client(conString)
+	const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile, watched) 
+		VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, 
+		(SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1),
+		false
+	)`
+  const client = new pg.Client(conString)
 
 	client.connect((err) => {
 		if(err) return console.error('could not connect to postgres', err)

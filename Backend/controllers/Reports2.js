@@ -9,7 +9,7 @@ const conObj = {
 }
 
 const top5Content = (req, res) => {
-  const pool = new pg.Pool(conObj)
+  const pool = new pg.Pool()
   
   ;(async () => {
     const client = await pool.connect()
@@ -51,6 +51,42 @@ const top5Content = (req, res) => {
   })().catch(e => console.error(e.stack))
 }
 
+const setFinishedMovie = (req, res) => {  
+		
+	const sql = `
+		UPDATE movie_data
+		SET watched = true
+		WHERE id_content = ${req.body.content}
+    AND profile = (
+      SELECT id_profile 
+      FROM user_profiles 
+      WHERE username = '${req.body.username}' 
+      AND profile = '${req.body.profile}' 
+      LIMIT 1
+    )
+	`
+
+  console.log(sql)
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+}
+
 module.exports = {
-	top5Content
+	top5Content,
+  setFinishedMovie
 }
