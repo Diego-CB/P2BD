@@ -1,7 +1,7 @@
 import React from "react"
 import TextInput from "../../../components/TextInput.jsx"
 
-const handleAlterMovie = (setMovies,idContent, category, newValue) => {
+const handleAlterMovie = (setMovies,idContent, category, newValue, username) => {
     if (!['category', 'min_duration'].includes(category)) {
         newValue = `'${newValue}'`
     }
@@ -28,6 +28,7 @@ const handleAlterMovie = (setMovies,idContent, category, newValue) => {
                 idContent,
                 category,
                 newValue,
+                username,
             })
         })
         .then(response => response.json())
@@ -45,7 +46,7 @@ const handleAlterMovie = (setMovies,idContent, category, newValue) => {
 	})
 }
 
-const AlterMovie = ({ setMovies }) => {
+const AlterMovie = ({ setMovies, username }) => {
 
     const [idContent, setIdContent] = React.useState(0)
     const [select, setSelect] = React.useState('')
@@ -97,7 +98,7 @@ const AlterMovie = ({ setMovies }) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAlterMovie(setMovies, idContent, select, newValue)
+                        handleAlterMovie(setMovies, idContent, select, newValue, username)
                     }}
                 >
                     Editar Contenido {idContent}

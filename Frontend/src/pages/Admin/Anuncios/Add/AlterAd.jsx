@@ -2,7 +2,7 @@ import React from "react"
 
 import TextInput from "../../../../components/TextInput.jsx"
 
-const handleAlterAd = (setAds,ad, category, newValue) => {
+const handleAlterAd = (setAds,ad, category, newValue, username) => {
     
     if (category == 'message') {
         newValue = `'${newValue}'`
@@ -17,6 +17,7 @@ const handleAlterAd = (setAds,ad, category, newValue) => {
             ad,
             category,
             newValue,
+            username,
         })
     })
     .then(response => response.json())
@@ -31,7 +32,7 @@ const handleAlterAd = (setAds,ad, category, newValue) => {
 }
 
 
-const AlterAd = ( {setAds} ) => {
+const AlterAd = ( {setAds, username} ) => {
     const [ad, setAd] = React.useState('0')
     const [select, setSelect] = React.useState('')
     const [newValue, setNewValue] = React.useState('')
@@ -78,7 +79,7 @@ const AlterAd = ( {setAds} ) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAlterAd(setAds, ad, select, newValue)
+                        handleAlterAd(setAds, ad, select, newValue, username)
                     }}
                 >
                     Editar Anuncio {ad}

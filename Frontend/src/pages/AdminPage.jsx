@@ -3,7 +3,7 @@ import React from 'react'
 import '../styles/adminPage.css'
 
 const getSpecs = (type) => {
-    if (type === 'Contenido') return ['Agregar contenido', 'Modificar contenido']
+    if (type === 'Contenido') return ['Agregar contenido', 'Modificar contenido', 'Agregar actor', 'Modificar Actor', 'Agregar director', 'Modificar director']
     if (type === 'Usuarios') return ['Modificar usuarios', 'Dar de baja usuarios']
 
     if (type === 'Anuncios') return [

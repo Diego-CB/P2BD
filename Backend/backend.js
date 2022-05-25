@@ -312,7 +312,8 @@ app.post('/alterMovie', (req, res) => {
 		
 	const sql = `
 		UPDATE contenido
-		SET ${req.body.category} = ${req.body.newValue}
+		SET ${req.body.category} = ${req.body.newValue},
+			username = '${req.body.username}'
 		WHERE id_content = ${req.body.idContent}
 	`
 	const client = new pg.Client(conString)
@@ -537,9 +538,10 @@ app.get('/adsList', (req, res) => {
 app.post('/newAdd', (req, res) => {  
 		
 	const sql = `
-		INSERT INTO ad (announcer_id, message) VALUES (
+		INSERT INTO ad (announcer_id, message, username) VALUES (
 			${req.body.announcer}, 
-			'${req.body.message}'
+			'${req.body.message}',
+			'${req.body.username}'
 		)`
   
 	const client = new pg.Client(conString)
@@ -563,7 +565,8 @@ app.post('/alterAd', (req, res) => {
 		
 	const sql = `
 		UPDATE ad
-		SET ${req.body.category} = ${req.body.newValue}
+		SET ${req.body.category} = ${req.body.newValue},
+			username = '${req.body.username}'
 		WHERE ad_id = ${req.body.ad}
 	`
 	const client = new pg.Client(conString)
@@ -634,7 +637,7 @@ app.get('/announcerList', (req, res) => {
 
 app.post('/newAnnouncer', (req, res) => {  
 		
-	const sql = `INSERT INTO announcer (a_name) VALUES ('${req.body.announcer}')`
+	const sql = `INSERT INTO announcer (a_name, username) VALUES ('${req.body.announcer}', '${req.body.username}')`
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -656,7 +659,8 @@ app.post('/alterAnnouncer', (req, res) => {
 		
 	const sql = `
 		UPDATE announcer
-		SET a_name = '${req.body.newValue}'
+		SET a_name = '${req.body.newValue}',
+			username = '${req.body.username}'
 		WHERE announcer_id = ${req.body.announcer}
 	`
 	const client = new pg.Client(conString)
@@ -724,7 +728,7 @@ app.post('/checkActorExist', (req, res) => {
 
 app.post('/addActor', (req, res) => {  
 		
-	const sql = `INSERT INTO actors(actor) VALUES ('${req.body.actor}')`
+	const sql = `INSERT INTO actors(actor, username) VALUES ('${req.body.actor}', '${req.body.username}')`
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -748,7 +752,8 @@ app.post('/alterActor', (req, res) => {
 		
 	const sql = `
 		UPDATE actors
-		SET actor = '${req.body.newValue}'
+		SET actor = '${req.body.newValue}',
+			username = '${req.body.username}'
 		WHERE id_actor = ${req.body.actor}
 	`
 

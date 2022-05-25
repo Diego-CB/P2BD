@@ -21,15 +21,15 @@ const AdminContent = ({ setAdminShow, username }) => {
 			<Header title='Admin-Contenido' user={username}/>
             {toggleActors 
                 ? <div className='main-content-admin content-admin-page'>
-                    <AddActor/>
-                    <AlterActor/>
+                    <AddActor username={username}/>
+                    <AlterActor username={username}/>
                     <AddDirector/>
                     <AlterDirector/>
                 </div>
                 : <div className='main-content-admin content-admin-page'>
                     <MovieList movies={movies} setMovies={setMovies}/>
                     <AddMovie setMovies={setMovies} username={username}/>
-                    <AlterMovie setMovies={setMovies}/>
+                    <AlterMovie setMovies={setMovies} username={username}/>
                     <DeleteMovie setMovies={setMovies}/>
                 </div>
             }
