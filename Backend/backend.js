@@ -265,14 +265,15 @@ app.get('/movieList', (req, res) => {
 app.post('/addMovie', (req, res) => {  
 		
 	const sql = `
-		INSERT INTO contenido (title, category, genre, release_date, link, min_duration) 
+		INSERT INTO contenido (title, category, genre, release_date, link, min_duration, username) 
         VALUES (
             '${req.body.title}', 
             ${req.body.category}, 
             '${req.body.genre}', 
             '${req.body.releaseDate}',
             '${req.body.link}', 
-            ${req.body.duration}
+            ${req.body.duration},
+			'${req.body.username}'
         )`
   
 	const client = new pg.Client(conString)

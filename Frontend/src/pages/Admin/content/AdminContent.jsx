@@ -28,7 +28,7 @@ const AdminContent = ({ setAdminShow, username }) => {
                 </div>
                 : <div className='main-content-admin content-admin-page'>
                     <MovieList movies={movies} setMovies={setMovies}/>
-                    <AddMovie setMovies={setMovies}/>
+                    <AddMovie setMovies={setMovies} username={username}/>
                     <AlterMovie setMovies={setMovies}/>
                     <DeleteMovie setMovies={setMovies}/>
                 </div>

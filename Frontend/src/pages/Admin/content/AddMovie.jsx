@@ -1,7 +1,7 @@
 import React from "react"
 import TextInput from "../../../components/TextInput.jsx"
 
-const handleAddMovie = (title, category, genre, releaseDate, link, duration, setMovies) => {
+const handleAddMovie = (title, category, genre, releaseDate, link, duration, setMovies, username) => {
     fetch('http://127.0.0.1:8000/addMovie', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -14,6 +14,7 @@ const handleAddMovie = (title, category, genre, releaseDate, link, duration, set
             releaseDate,
             link,
             duration,
+            username,
 		})
 	})
 	.then(response => response.json())
@@ -27,7 +28,7 @@ const handleAddMovie = (title, category, genre, releaseDate, link, duration, set
 	})
 }
 
-const AddMovie = ({ setMovies }) => {
+const AddMovie = ({ setMovies, username }) => {
 
     const [title, setTitle] = React.useState('')
     const [category, setCategory] = React.useState(false)
@@ -73,7 +74,7 @@ const AddMovie = ({ setMovies }) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAddMovie(title, category, genre, releaseDate, link, duration, setMovies)
+                        handleAddMovie(title, category, genre, releaseDate, link, duration, setMovies, username)
                     }}
                 >
                     Agregar Pelicula
