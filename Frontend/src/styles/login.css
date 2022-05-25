@@ -21,7 +21,7 @@ form {
     padding: 10px;
 }
 
-.main-content1 div {
+/* .main-content1 div {
     width: 400px;
     height: 300px;
     margin-top: 30px;
@@ -35,7 +35,7 @@ form {
     border-radius: 4%;
 
     color: white;
-}
+} */
 
 .main-content > * {
     color: white;
