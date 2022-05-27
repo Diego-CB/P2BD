@@ -398,3 +398,8 @@
 .d1 input{
     width: 100%;
 }
+
+.date-input input {
+    height: 15px;
+    width: 200px;
+}

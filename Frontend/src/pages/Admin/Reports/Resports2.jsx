@@ -1,33 +1,9 @@
 import React from "react"
 import Header from "../../../components/Header.jsx"
 import Top5Content from "./Parte2/Top5Content.jsx"
-
-const Top10Terms = () => {
-
-  const handleTop10Terms = () => {
-    return
-  }
-
-  return <div>top 10 terms</div>
-}
-
-const Top5Admins = () => {
-
-  const handleTop5Admins = () => {
-    return
-  }
-
-  return <div>top 10 terms</div>
-}
-
-const Top20Movies = () => {
-
-  const handleTop20Moviess = () => {
-    return
-  }
-
-  return <div>top 20 movies</div>
-}
+import Top10Terms from "./Parte2/Top10Terms.jsx"
+import Top20Movies from "./Parte2/Top20Movies.jsx"
+import Top5Admins from "./Parte2/Top5Admins.jsx"
 
 const AdminReports = ({ username, setAdminShow }) => {
 

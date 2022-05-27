@@ -19,7 +19,10 @@ const { createAdmin } = require('./controllers/Admin')
 const { 
 	top5Content, 
 	setFinishedMovie,
-	searchReport
+	searchReport,
+	Top10Terms,
+	Top20Movies,
+	top5admins
 } = require('./controllers/Reports2')
 
 // Conexion con base de datos
@@ -38,6 +41,9 @@ app.listen(8000, () => {
 app.post('/top5Content', top5Content)
 app.post('/setFinishedMovie', setFinishedMovie)
 app.post('/searchReport', searchReport)
+app.get('/Top10Terms', Top10Terms)
+app.post('/Top20Movies', Top20Movies)
+app.get('/top5admins', top5admins)
 
 
 app.post('/createAdmin', createAdmin)

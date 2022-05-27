@@ -9,7 +9,7 @@ const conObj = {
 }
 
 const top5Content = (req, res) => {
-  const pool = new pg.Pool()
+  const pool = new pg.Pool(conObj)
   
   ;(async () => {
     const client = await pool.connect()
@@ -86,10 +86,9 @@ const setFinishedMovie = (req, res) => {
 }
 
 const searchReport = (req, res) => {  
-		
 	const sql = `
 		INSERT INTO user_search VALUES
-    (${req.body.term})
+    ('${req.body.term}')
 	`
 
 	const client = new pg.Client(conString)
@@ -111,20 +110,84 @@ const searchReport = (req, res) => {
 	})
 }
 
-/*
+const Top10Terms = (req, res) => {  
+	const sql = `SELECT * from top10_terms`
+	const client = new pg.Client(conString)
 
-const sql = `
-		INSERT INTO record VALUES
-    (
-      '${req.body.username}',
-      CURRENT_TIMESTAMP,
-      
-    )
-	`
-*/
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true,
+        terms: result.rows
+			})
+		})
+	})
+
+}
+
+const Top20Movies = (req, res) => {  
+  console.log('body', req.body)
+  
+  const sql = `
+  SELECT * FROM top20movies(
+    '${req.body.start}', '${req.body.end}'
+  )`
+  const client = new pg.Client(conString)
+
+  client.connect((err) => {
+    if(err) return console.error('could not connect to postgres', err)
+    
+    client.query(sql, (err, result) => {
+      client.end()
+
+      if(err) {
+        console.error('error running query', err)
+        res.json({ success:false})
+      }
+      res.json({ 
+        success: true,
+        movies: result.rows
+      })
+    })
+  })
+}
+
+const top5admins = (req, res) => {  
+
+  const sql = `SELECT * FROM top5admins`
+  const client = new pg.Client(conString)
+
+  client.connect((err) => {
+    if(err) return console.error('could not connect to postgres', err)
+    
+    client.query(sql, (err, result) => {
+      client.end()
+
+      if(err) {
+        console.error('error running query', err)
+        res.json({ success:false})
+      }
+      res.json({ 
+        success: true,
+        admins: result.rows
+      })
+    })
+  })
+}
 
 module.exports = {
 	top5Content,
   setFinishedMovie,
-  searchReport
+  searchReport,
+  Top10Terms,
+  Top20Movies,
+  top5admins
 }
