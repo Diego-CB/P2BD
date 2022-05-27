@@ -24,6 +24,10 @@ const getSpecs = (type) => {
     if (type === 'Simulaciones') return [
         'Simular visualizaciones de un día',
     ]
+
+    if (type === 'Bitácora') return [
+        'Visualizar todos los cambios realizados',
+    ]
 }
 
 const getAdminPath = (type) => {
@@ -32,6 +36,7 @@ const getAdminPath = (type) => {
     if (type === 'Anuncios') return 3
     if (type === 'Reporteria') return 4
     if (type === 'Simulacion') return 5
+    if (type === 'Bitácora') return 6
 }
 
 const AdminOption = ({ title, setAdminShow }) => {
@@ -65,6 +70,7 @@ import AdminAdds from './Admin/Anuncios/AdminAdds.jsx'
 import AdminContent from './Admin/content/AdminContent.jsx'
 import AdminUsers from './Admin/users/AdminUsers.jsx'
 import AdminReports from './Admin/Reports/AdminReports.jsx'
+import Bitacora from './Admin/Bitacora/bitacora.jsx'
 
 const AdminPage = ({ username }) => {
     setDocTitle('Admin')
@@ -75,6 +81,8 @@ const AdminPage = ({ username }) => {
     if (amdinShow === 2) return <AdminUsers   setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 3) return <AdminAdds    setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 4) return <AdminReports setAdminShow={setAdminShow} username={username}/>
+    // if (amdinShow === 5) return <AdminReports setAdminShow={setAdminShow} username={username}/> // Cambiar para simulaciones
+    if (amdinShow === 6) return <Bitacora/>
 
     return (
         <div className = 'content'>
@@ -86,7 +94,7 @@ const AdminPage = ({ username }) => {
                     <AdminOption setAdminShow={setAdminShow} title={'Anuncios'}/>
                     <AdminOption setAdminShow={setAdminShow} title={'Reporteria'}/>
                     <AdminOption setAdminShow={setAdminShow} title={'Simulaciones'}/>
-                   
+                    <AdminOption setAdminShow={setAdminShow} title={'Bitácora'}/>
                 </div>
             </div>
         </div>

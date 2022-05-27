@@ -245,6 +245,22 @@ app.post('/profiledisable', (req, res) => {
 
 //Admin 
 
+app.get('/recordList', (req, res) => {
+	const sql = 'SELECT * FROM record'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
 app.get('/movieList', (req, res) => {
 	const sql = 'SELECT id_content, title, genre, CAST(release_date as TEXT) FROM contenido'
 	const client = new pg.Client(conString)
