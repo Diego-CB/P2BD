@@ -66,7 +66,6 @@ const setFinishedMovie = (req, res) => {
     )
 	`
 
-  console.log(sql)
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -86,7 +85,46 @@ const setFinishedMovie = (req, res) => {
 	})
 }
 
+const searchReport = (req, res) => {  
+		
+	const sql = `
+		INSERT INTO user_search VALUES
+    (${req.body.term})
+	`
+
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success:false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+}
+
+/*
+
+const sql = `
+		INSERT INTO record VALUES
+    (
+      '${req.body.username}',
+      CURRENT_TIMESTAMP,
+      
+    )
+	`
+*/
+
 module.exports = {
 	top5Content,
-  setFinishedMovie
+  setFinishedMovie,
+  searchReport
 }

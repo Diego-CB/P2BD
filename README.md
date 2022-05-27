@@ -6,10 +6,10 @@
 ## Commands
 
 > ### Frontend 
-> - Dev Server: npm start
-> - Compile: npm run build
-> - Crear carpeta "node_modules": npm install (dentro de Frontend)
+> - `npm start` — Dev Server 
+> - `npm run build` — Compile
+> - `npm install` (dentro de `Frontend`) — Crear carpeta "node_modules"
 
 > ### Backend
-> - Deploy api server: npm start
-> - Crear carpeta "node_modules": npm install (dentro de Backend)
+> - `npm start` — Deploy api server
+> - `npm install` (dentro de `Backend`) — Crear carpeta "node_modules":

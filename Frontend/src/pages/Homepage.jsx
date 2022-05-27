@@ -415,6 +415,27 @@ const handleSetFinishedMovie = ( profile, content, username ) => {
 	})
 }
 
+const handleSearchReport = ( term ) => {
+	fetch('http://127.0.0.1:8000/searchReport', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			term,
+		})
+	})
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return console.error(
+			'No se agrego la busqueda a reporteria'
+		)
+	})
+	.catch (error => {
+		console.error('Error en handleSearchReport', error)
+		alert('Server connection problem at handleSearchReport')
+	})
+}
 
 // -------- MAIN HOMEPAGE --------
 const Homepage = ({username, profile}) => {
@@ -471,6 +492,7 @@ const Homepage = ({username, profile}) => {
                         </select>
                         <button className="Search-btn" onClick={()=>{
                             console.log('cat', category)
+														handleSearchReport(searchingFor)
                             if (category==='Actor') {
                                 handleSearchActor(searchingFor, setMoviesSearched)
                             } else if (category==='Director') {

@@ -18,7 +18,8 @@ const pg = require('pg')
 const { createAdmin } = require('./controllers/Admin')
 const { 
 	top5Content, 
-	setFinishedMovie 
+	setFinishedMovie,
+	searchReport
 } = require('./controllers/Reports2')
 
 // Conexion con base de datos
@@ -36,6 +37,7 @@ app.listen(8000, () => {
 // Reporteria parte 2
 app.post('/top5Content', top5Content)
 app.post('/setFinishedMovie', setFinishedMovie)
+app.post('/searchReport', searchReport)
 
 
 app.post('/createAdmin', createAdmin)
