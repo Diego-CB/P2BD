@@ -420,65 +420,82 @@
     width: 40%;
     height: 25px;
     margin-top:10px;
-
     border: none;
     border-radius: 8px;
     background-color: rgb(78, 104, 184);
     color:aliceblue;
-
     cursor: pointer;
 }
 .btn-genera:hover {
     background-color: rgb(50, 78, 159);
 }
 
-.show-vis {
-    grid-area: list;
-    margin-bottom:90vh;
-    display: flex;
-    flex-direction: column;
-    height: fit-content;
-    width: 90%;
+.btn-SF{
+    width: 40%;
+    height: 25px;
+    margin-top:10px;
+    margin-left:10px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(78, 104, 184);
+    color:aliceblue;
+    cursor: pointer;
 }
-
-.show-vis header {
-    width: 100%;
-    height: fit-content;
-    display: flex;
-    flex-direction: column;
-
+.btn-SF:hover {
     background-color: rgb(50, 78, 159);
 }
 
-.show-vis .table-headers-user {
-    margin-top: 0;
-    width: 100%;
-    display: grid;
-    font-weight: bold;
-    grid-template-columns: 1fr 1fr 1fr;
+.ver-simulacion-admin {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
 }
 
-.show-vis-table-headers-user > * {
+.ver-simulacion-admin header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-simulacion-admin header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-simulacion {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+}
+
+.table-simulacion div {
+    text-align: center;
     background-color: grey;
     border: solid black 1px;
     color: black;
 }
 
-.show-vis-table-headers-user {
-    text-align:left;
-}
-
-.show-vis-table-content-user {
+.table-simulacion1 {
+    color: black;
     flex-grow: 1;
     background-color: white;
     list-style: none;
-    color: black;
     overflow-y: scroll;
-    
 }
 
-.show-vis-row-content-user {
+.row-simulacion {
+
+    width: 100%;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    color:black;
+   
+}
+
+.row-simulacion p {
     border-bottom: solid black 1px;
+    padding-left: 20px;
 }

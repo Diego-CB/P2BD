@@ -15,6 +15,7 @@ const handleAdsList = (setAds) => {
 const AdsList = ( {ads, setAds}) => {
 
     ads.length == 0 && handleAdsList(setAds)
+    console.log(ads)
 
     return (
         <div className="ver-content-admin">
