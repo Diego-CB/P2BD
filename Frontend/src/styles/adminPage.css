@@ -479,13 +479,12 @@
     color: black;
 }
 
-.table-simulacion1 {
+.table-simulacion3 {
     color: black;
     flex-grow: 1;
     background-color: white;
     list-style: none;
     overflow-y: scroll;
-   
 }
 
 .row-simulacion {
@@ -494,13 +493,11 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     color:black;
-    border:1px solid blue;
 }
 
 .row-simulacion p {
     border-bottom: solid black 1px;
     padding-left: 20px;
-    
 }
 
 /* SIMULACIONES SIN FECHA */

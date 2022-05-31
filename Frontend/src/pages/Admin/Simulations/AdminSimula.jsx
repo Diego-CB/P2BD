@@ -33,7 +33,7 @@ const handleSimulacion2 = (n,d,setSimulation) =>{
             })
             .then(response => response.json())
             .then(result => {
-                console.log('corrio dude')
+                console.log('corrio dude', result.list)
                 setSimulation(result.list)
             })
             .catch (error => {
@@ -86,7 +86,7 @@ const AdminSimulation = ({setAdminShow, username }) =>{
                 </div>
             </header>
 
-            <ul className="table-simulacion1">
+            <ul className="table-simulacion3">
                 {simulation.map((row, index) => (
                      <li className="row-simulacion"
                         key={index}>
