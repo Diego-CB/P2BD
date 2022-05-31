@@ -14,7 +14,7 @@ const handleRecords = ( setRecords ) => {
 
 }
 
-const Bitacora = () => {
+const Bitacora = ({ setAdminShow }) => {
 
     const [records, setRecords] = React.useState([])
     // typeof(records == 'undefined') && handleRecords(setRecords) && console.log('Si fjklsd;ajfl')
@@ -37,7 +37,7 @@ const Bitacora = () => {
                         <div>Descripción</div>
                     </div>
                 </header>
-                <ul className="table-bitacora">
+                <ul className="table-content-bitacora">
                     {records.length > 0 && records.map((row, index) => (
                         <li 
                             className="row-bitacora"
@@ -53,6 +53,14 @@ const Bitacora = () => {
                     )} 
                 </ul>
             </div>
+            <footer className="admin-footer">
+                <button 
+                    className="default-button nav-button"
+                    onClick={() => setAdminShow(0)}
+                >
+                    Ir a Homepage
+                </button>
+            </footer>
         </div>
     )
 }

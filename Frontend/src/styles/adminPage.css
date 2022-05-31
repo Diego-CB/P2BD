@@ -68,6 +68,7 @@
     color:aliceblue;
 
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .default-button:hover {
@@ -146,17 +147,18 @@
 .table-bitacora div {
     text-align: center;
     background-color: grey;
-    border: solid black 1px;
+    /* border: solid black 1px; */
     color: black;
 }
 
-.table-bitacora {
+.table-content-bitacora {
     color: black;
     flex-grow: 1;
     background-color: white;
 
     list-style: none;
     overflow-y: scroll;
+    margin-bottom: 20px;
 }
 
 .row-bitacora {
@@ -174,7 +176,80 @@
     padding-left: 10px;
 }
 
+/* lista actors */
+.table-headers-actors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
 
+.table-headers-actors div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-actors {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-actors {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-actors p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
+
+
+/* lista casting*/
+.table-headers-casting {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.table-headers-casting div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-casting {
+    margin:0;
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-casting {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-casting p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
 
 /* ver content */
 .ver-content-admin {
@@ -574,4 +649,8 @@
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     border-bottom: solid black 1px;
+}
+
+.down {
+    margin-top:124px;
 }

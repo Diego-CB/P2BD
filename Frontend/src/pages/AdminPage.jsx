@@ -82,7 +82,7 @@ const AdminPage = ({ username }) => {
     if (amdinShow === 3) return <AdminAdds    setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 4) return <AdminReports setAdminShow={setAdminShow} username={username}/>
     // if (amdinShow === 5) return <AdminReports setAdminShow={setAdminShow} username={username}/> // Cambiar para simulaciones
-    if (amdinShow === 6) return <Bitacora/>
+    if (amdinShow === 6) return <Bitacora setAdminShow={setAdminShow}/>
 
     return (
         <div className = 'content'>
