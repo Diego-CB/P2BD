@@ -1,5 +1,4 @@
 import React from 'react'
-import Header from "../../../components/Header.jsx"
 import TextInput_num from "../../../components/TextInputNumber.jsx"
 
 const handleSimulacion1 = (n, setListSimulation) => {
@@ -23,7 +22,7 @@ const handleSimulacion1 = (n, setListSimulation) => {
 
 
 const AdminSimulationSF = ({setAdminShow, username }) =>{
-    const [newValue, setNewValue] = React.useState('1')
+    const [newValue, setNewValue] = React.useState('')
     const [listSimulation, setListSimulation] = React.useState([])
 
 

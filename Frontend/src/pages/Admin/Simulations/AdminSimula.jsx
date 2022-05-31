@@ -52,8 +52,8 @@ const handleSimulacion2 = (n,d,setSimulation) =>{
 
 
 const AdminSimulation = ({setAdminShow, username }) =>{
-    const [newValue, setNewValue] = React.useState('3')
-    const [newValued, setNewValued] = React.useState('01-02-1900')
+    const [newValue, setNewValue] = React.useState('')
+    const [newValued, setNewValued] = React.useState('')
     const [simulation, setSimulation] = React.useState([])
 
     return (
@@ -79,8 +79,8 @@ const AdminSimulation = ({setAdminShow, username }) =>{
             <header>
                 <h3>Simulaciones</h3>
                 <div className="table-simulacion">
-                    <div>User</div>
-                    <div>Content</div>
+                    <div>User_id</div>
+                    <div>Content_id</div>
                     <div>Started</div>
                     <div>Finished</div>
                 </div>
