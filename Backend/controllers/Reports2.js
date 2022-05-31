@@ -15,7 +15,7 @@ const top5Content = (req, res) => {
     const client = await pool.connect()
     try {
       await client.query('BEGIN')
-      await client.query('SET TRANSACTION INSOLATION LEVEL SERIALIZABLE')
+      await client.query('SET TRANSACTION ISOLATION LEVEL SERIALIZABLE')
 
       const fetches = [
         'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k',
