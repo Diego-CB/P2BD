@@ -15,6 +15,15 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const cors = require('cors')
 const pg = require('pg')
+const { createAdmin } = require('./controllers/Admin')
+const { 
+	top5Content, 
+	setFinishedMovie,
+	searchReport,
+	Top10Terms,
+	Top20Movies,
+	top5admins
+} = require('./controllers/Reports2')
 
 const {conDate, default: execute} = require('./controllers/SimulationInsert.jsx')
 
@@ -30,9 +39,16 @@ app.listen(8000, () => {
     console.log('Corrio en 8000 :D')
 })
 
-app.get('/', (req, res) => {
-    res.send('Hello World')
-})
+// Reporteria parte 2
+app.post('/top5Content', top5Content)
+app.post('/setFinishedMovie', setFinishedMovie)
+app.post('/searchReport', searchReport)
+app.get('/Top10Terms', Top10Terms)
+app.post('/Top20Movies', Top20Movies)
+app.get('/top5admins', top5admins)
+
+
+app.post('/createAdmin', createAdmin)
 
 // Registro de nuevos usuarios
 
@@ -992,7 +1008,7 @@ app.get('/categoryReproduc', (req, res) => {
 		FROM contenido c
 		NATURAL JOIN movie_data m
 		JOIN user_profiles up ON m.profile = up.id_profile
-		NATURAL JOIN users u
+		JOIN users u ON u.username = up.username
 		WHERE m.started >= '01-01-2022' and m.finished <= '12-31-2022'
 		GROUP BY u.plan, c.category
 		ORDER BY reproducciones DESC
@@ -1032,7 +1048,7 @@ app.get('/top10Cast', (req, res) => {
 		natural join movie_data m
 		natural join director
 		join user_profiles up on m.profile = up.id_profile
-		natural join users u
+		join users u on u.username = up.username
 		where u.plan = 0
 		group by a.actor, d.director
 		order by apariciones
@@ -1248,8 +1264,12 @@ app.post('/tomarEstado', (req, res) => {
 
 app.post('/subirVisualizacion', (req, res) => {
 
-	const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile) VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, (SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1))`
-    const client = new pg.Client(conString)
+	const sql = `INSERT INTO public.movie_data (id_content, started, finished, profile, watched) 
+		VALUES(${req.body.id_content}, ('${req.body.started}')::Timestamp, ('${req.body.finished}')::Timestamp, 
+		(SELECT id_profile FROM user_profiles WHERE username = '${req.body.username}' AND profile = '${req.body.profile}' LIMIT 1),
+		false
+	)`
+  const client = new pg.Client(conString)
 
 	client.connect((err) => {
 		if(err) return console.error('could not connect to postgres', err)

@@ -393,6 +393,50 @@ const handleAnuncios= ( setAdAnuncio ) => {
 	})
 }
 
+const handleSetFinishedMovie = ( profile, content, username ) => {
+	fetch('http://127.0.0.1:8000/setFinishedMovie', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			content,
+			profile,
+			username,
+		})
+	})
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return alert('Error de conexion')
+		console.log('Finalizada la pelicula')
+	})
+	.catch (error => {
+		console.error('Error en handleRecomendations', error)
+		alert('Server connection problem at handleRecomendations')
+	})
+}
+
+const handleSearchReport = ( term ) => {
+	fetch('http://127.0.0.1:8000/searchReport', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			term,
+		})
+	})
+	.then(response => response.json())
+	.then (result => {
+		if (!result.success) return console.error(
+			'No se agrego la busqueda a reporteria'
+		)
+	})
+	.catch (error => {
+		console.error('Error en handleSearchReport', error)
+		alert('Server connection problem at handleSearchReport')
+	})
+}
 
 // -------- MAIN HOMEPAGE --------
 const Homepage = ({username, profile}) => {
@@ -449,6 +493,7 @@ const Homepage = ({username, profile}) => {
                         </select>
                         <button className="Search-btn" onClick={()=>{
                             console.log('cat', category)
+														handleSearchReport(searchingFor)
                             if (category==='Actor') {
                                 handleSearchActor(searchingFor, setMoviesSearched)
                             } else if (category==='Director') {
@@ -532,6 +577,8 @@ const Homepage = ({username, profile}) => {
                                 }}>Detener película</button>
 
                                 <button className="Movie-btn" onClick={() => {
+																	handleSetFinishedMovie( profile, movie.id_content, username)
+																	//Llamar función de fetch
                                     if (estado == true) {
                                         const now = new Date();
                                         const time = movie.min_duration * 60000

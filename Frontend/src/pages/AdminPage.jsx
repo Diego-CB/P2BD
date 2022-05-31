@@ -71,6 +71,7 @@ import setDocTitle from '../util/docTitle.js'
 import AdminAdds from './Admin/Anuncios/AdminAdds.jsx'
 import AdminContent from './Admin/content/AdminContent.jsx'
 import AdminUsers from './Admin/users/AdminUsers.jsx'
+import DirectR from './Admin/Reports/DirectR.jsx'
 import AdminReports from './Admin/Reports/AdminReports.jsx'
 import Bitacora from './Admin/Bitacora/bitacora.jsx'
 import HomeSimulation from './Admin/Simulations/HomeSimulations.jsx'
@@ -84,8 +85,9 @@ const AdminPage = ({ username }) => {
     if (amdinShow === 2) return <AdminUsers   setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 3) return <AdminAdds    setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 4) return <AdminReports setAdminShow={setAdminShow} username={username}/>
-    if (amdinShow === 6) return <Bitacora setAdminShow={setAdminShow}/>
     if (amdinShow === 5) return <HomeSimulation setAdminShow={setAdminShow} username={username}/>
+    if (amdinShow === 6) return <Bitacora setAdminShow={setAdminShow}/>
+    if (amdinShow === 7) return <DirectR setAdminShow={setAdminShow} username={username}/>
 
     return (
         <div className = 'content'>

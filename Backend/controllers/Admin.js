@@ -1,20 +1,29 @@
 const pg = require('pg')
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
 
-const ejemplo = (req, res) => {
-    const sql = `SELECT * FROM users WHERE username = '${req.body.username}'`
-    const client = new pg.Client(conString)
+const createAdmin = (req, res) => {
+	const sql = `
+		INSERT INTO users (username, email, user_password, administrador) 
+        VALUES (
+            '${req.body.username}', 
+            '${req.body.email}', 
+            '${req.body.password}', 
+            true
+        )`
+  
+	const client = new pg.Client(conString)
+	client.connect((err) => client.query(sql, (err, result) => {
+		client.end()
 
-	client.connect((err) => {
-		if(err) return console.error('could not connect to postgres', err)
-		
-		client.query(sql, (err, result) => {
-			if(err) return console.error('error running query', err)
-            
-            client.end()
-			res.json({ 
-				userExist: result.rows.length > 0
-			})
+		if(err) return res.json({ 
+			error: err,
+			success: false
 		})
-	})
+
+		res.json({ success: true })
+	}))
+}
+
+module.exports = {
+	createAdmin
 }
