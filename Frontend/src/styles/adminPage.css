@@ -68,6 +68,7 @@
     color:aliceblue;
 
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .default-button:hover {
@@ -116,6 +117,139 @@
 }
 
 
+
+/* bitácora */
+.ver-bitacora-admin {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-bitacora-admin header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-bitacora-admin header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-bitacora {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.table-bitacora div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-bitacora {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+.row-bitacora {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-bitacora p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
+
+/* lista actors */
+.table-headers-actors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.table-headers-actors div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-actors {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-actors {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-actors p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
+
+
+/* lista casting*/
+.table-headers-casting {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.table-headers-casting div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-casting {
+    margin:0;
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-casting {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-casting p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
 
 /* ver content */
 .ver-content-admin {
@@ -586,5 +720,9 @@
 
 .row-simulacion1 p {
     border-bottom: solid black 1px;
+}
+
+.down {
+    margin-top:124px;
     padding-left: 20px;
 }

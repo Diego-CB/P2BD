@@ -2,7 +2,7 @@ import React from "react"
 
 import TextInput from "../../../../components/TextInput.jsx"
 
-const handleAlterAd = (setAds,announcer, newValue) => {
+const handleAlterAd = (setAds,announcer, newValue, username) => {
     
     fetch('http://127.0.0.1:8000/alterAnnouncer', {
         headers: {
@@ -12,6 +12,7 @@ const handleAlterAd = (setAds,announcer, newValue) => {
         body: JSON.stringify({
             announcer,
             newValue,
+            username,
         })
     })
     .then(response => response.json())
@@ -26,7 +27,7 @@ const handleAlterAd = (setAds,announcer, newValue) => {
 }
 
 
-const AlterAd = ( {setAds} ) => {
+const AlterAd = ( {setAds, username} ) => {
     const [announcer, setAnnouncer] = React.useState('')
     const [newValue, setNewValue] = React.useState('')
 
@@ -59,7 +60,7 @@ const AlterAd = ( {setAds} ) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAlterAd(setAds, announcer, newValue)
+                        handleAlterAd(setAds, announcer, newValue, username)
                     }}
                 >
                     Editar Anunciante {announcer}

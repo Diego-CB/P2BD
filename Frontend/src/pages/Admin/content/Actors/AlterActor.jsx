@@ -1,7 +1,7 @@
 import React from "react"
 import TextInput from "../../../../components/TextInput.jsx"
 
-const handleAlterMovie = (actor, newValue) => {
+const handleAlterMovie = (actor, newValue, username) => {
 
     fetch('http://127.0.0.1:8000/alterActor', {
         headers: {
@@ -11,6 +11,7 @@ const handleAlterMovie = (actor, newValue) => {
         body: JSON.stringify({
             actor,
             newValue,
+            username,
         })
     })
     .then(response => response.json())
@@ -23,7 +24,7 @@ const handleAlterMovie = (actor, newValue) => {
     })
 }
 
-const AlterMovie = ({ }) => {
+const AlterMovie = ({ username }) => {
 
     const [idContent, setIdContent] = React.useState(0)
     const [newValue, setNewValue] = React.useState('')
@@ -57,7 +58,7 @@ const AlterMovie = ({ }) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleAlterMovie(idContent, newValue)
+                        handleAlterMovie(idContent, newValue, username)
                     }}
                 >
                     Editar Actor {idContent}

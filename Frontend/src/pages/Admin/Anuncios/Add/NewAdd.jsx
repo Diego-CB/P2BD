@@ -1,7 +1,7 @@
 import React from "react"
 import TextInput from '../../../../components/TextInput.jsx'
 
-const handleNewAdd = (announcer, message, setAds) => {
+const handleNewAdd = (announcer, message, setAds, username) => {
     fetch('http://127.0.0.1:8000/newAdd', {
 		headers: {
 			'Content-Type': 'application/json'
@@ -9,7 +9,8 @@ const handleNewAdd = (announcer, message, setAds) => {
 		method: 'POST',
 		body: JSON.stringify({
 			announcer,
-            message
+            message,
+            username,
 		})
 	})
 	.then(response => response.json())
@@ -23,7 +24,7 @@ const handleNewAdd = (announcer, message, setAds) => {
 	})
 }
 
-const NewAdd = ( {setAds} ) => {
+const NewAdd = ( {setAds, username} ) => {
 
     const [announcer, setAnnouncer] = React.useState('')
     const [message, setMessage] = React.useState('')
@@ -44,7 +45,7 @@ const NewAdd = ( {setAds} ) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleNewAdd(announcer, message, setAds)
+                        handleNewAdd(announcer, message, setAds, username)
                     }}
                 >
                     Agregar Anuncio

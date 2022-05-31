@@ -29,8 +29,8 @@ const AdminAdds = ({ username, setAdminShow }) => {
                     </div>
 
                 : (toggleAdds == 1 
-                    ? <HomeAdd/>
-                    : <HomeAnouncer/>
+                    ? <HomeAdd username={username}/>
+                    : <HomeAnouncer username={username}/>
                 )
             }</div>
             <footer className="admin-footer">
