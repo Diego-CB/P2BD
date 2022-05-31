@@ -57,7 +57,8 @@ const handleLogin = (username, password, setIsRegis, setIsLogedIn, setUsername, 
 		console.error('Error al intentar loggear', error)
 		alert('Error de conexion: intente más tarde')
 	})
-	}})
+		}
+	})
 	.catch (error => {
 		console.error('Error al intentar loggear', error)
 		alert('Error de conexion: intente más tarde')

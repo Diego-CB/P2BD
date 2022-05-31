@@ -1,6 +1,6 @@
 import React from 'react'
 import Header from "../../../components/Header.jsx"
-import TextInput from "../../../components/TextInput.jsx"
+import TextInput_text from "../../../components/TextInpuText.jsx"
 import TextInput_num from "../../../components/TextInputNumber.jsx"
 
 const handleSimulacion1 = (n, setListSimulation) => {
@@ -22,7 +22,7 @@ const handleSimulacion1 = (n, setListSimulation) => {
 }
 
 
-const handleSimulacion2 = (n,d, setSimulation) =>{
+const handleSimulacion2 = (n,d) =>{
 
     fetch('http://127.0.0.1:8000/conFecha', {
 		headers: {
@@ -34,10 +34,34 @@ const handleSimulacion2 = (n,d, setSimulation) =>{
             d,
 		})
     })
-	.then(response => response.json())
+
+    .then (response => response.json())
+    .then(result =>{
+        if(result.success){
+            console.log('yas')
+            fetch('http://127.0.0.1:8000/mostrar', {
+		    headers: {
+			    'Content-Type': 'application/json'
+		    },
+            method: 'POST',
+            body: JSON.stringify({
+                n,
+                d,	
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('show',result.list)
+            })
+            .catch (error => {
+                console.error('Error al intentar mostrar', error)
+                alert('Error de conexion: intente más tarde')
+            })
+        }
+    })
 
 	.catch (error => {
-		console.error('Error al crear user', error)
+		console.error('Error al cargar data', error)
 		alert('Error de conexion:( intente más tarde')
 	})
 
@@ -45,19 +69,20 @@ const handleSimulacion2 = (n,d, setSimulation) =>{
 
 
 const AdminSimulation = ({setAdminShow, username }) =>{
-    const [newValue, setNewValue] = React.useState('2')
-    const [newValued, setNewValued] = React.useState('01-01-2020')
+    const [newValue, setNewValue] = React.useState('1')
+    const [newValued, setNewValued] = React.useState('01-02-2020')
     const [listSimulation, setListSimulation] = React.useState([])
     const [simulation, setSimulation] = React.useState([])
-     
-    console.log(simulation,'aquiiiii nf')
+
+    console.log(simulation)
+
 
     return (
     <div className='content'>
             <Header title='Simulaciones' user={username} />
 
             <div className='ask'>
-                <TextInput
+                <TextInput_text
                     title='Ingrese una fecha mm-dd-yy'
                     set={setNewValued}
                     className='date-input' />

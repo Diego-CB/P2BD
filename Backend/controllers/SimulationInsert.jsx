@@ -18,17 +18,14 @@ const conDate = (req, res) => {
       
       const queryText = `SELECT * FROM confecha('${req.body.n}','${req.body.d}');`
       await client.query(queryText)
-   
-      const sql =`SELECT * FROM movie_data WHERE started ='${req.body.d}' LIMIT '${req.body.n}';`
-      await client.query(sql)
-   
       await client.query('COMMIT')
 
     console.log('aquiii')
-
-      res.json({ 
-        success: true,
-      })
+    
+    res.json({ 
+      success: true
+    })
+    
     } catch (e) {
       client.query('ROLLBACK')
       throw e
