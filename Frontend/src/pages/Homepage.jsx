@@ -134,6 +134,7 @@ const handleTomarEstado = ( username, profile, setEstado ) => {
     })
 	.then(response => response.json())
 	.then (result => {
+		console.log(result.estado[0].estado)
         setEstado(result.estado[0].estado)
 	})
 	.catch (error => {
@@ -450,10 +451,10 @@ const Homepage = ({username, profile}) => {
     const [moviesSearched, setMoviesSearched] = React.useState('')
     const [recomendations, setRecomendations] = React.useState(false)
     const [searchingFor, setSearchingFor] = React.useState('')
+	const moviesFav = handleFavorites(username, profile, setFavMovies)
+	const moviesCont = handleContinuarViendo(username, profile, setContinueMovies)
 
     useEffect(() => {
-        const moviesFav = handleFavorites(username, profile, setFavMovies)
-        const moviesCont = handleContinuarViendo(username, profile, setContinueMovies)
         const moviesCall = handleHomepage(setMovies);
         const moviesReco = handleRecomendations(username, profile, setRecomendations)
         setInterval(
@@ -558,6 +559,7 @@ const Homepage = ({username, profile}) => {
                                         setStartTime(StartingTime)
                                         handleUpdateState(username, profile)
                                         handleTomarEstado(username,profile,setEstado)
+										console.log('Click start')
                                     } else if (estado == true) {
                                         alert("No se permiten visualizar 2 películas al mismo tiempo. Intenta más tarde!")
                                     }
@@ -577,10 +579,22 @@ const Homepage = ({username, profile}) => {
                                 <button className="Movie-btn" onClick={() => {
 																	handleSetFinishedMovie( profile, movie.id_content, username)
 																	//Llamar función de fetch
+                                    if (estado == true) {
+                                        const now = new Date();
+                                        const time = movie.min_duration * 60000
+                                        const StopTime = new Date(now.getTime() + time).toISOString()
+                                        console.log('Start: ', startTime)
+                                        handleSubirVisualizacion(movie.id_content, startTime, StopTime, username, profile)
+                                        handleUpdateStateFalse(username, profile, setEstado)
+										console.log('Finish: ', StopTime)
+                                    }
+                                    //Llamar función de fetch
                                 }}>Finalizar película</button>
 
                                 <button className="Movie-btn" onClick={() => {
                                     console.log('Favoritos', movie.id_content)
+                                    console.log('Favoritos', username)
+                                    console.log('Favoritos', profile)
                                     handleAddFavorites(movie.id_content, username, profile)
                                 }}>Agregar a Favoritos</button>
                             </div>

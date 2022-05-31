@@ -1,6 +1,6 @@
 import React from "react"
 
-const handleDeleteMovie = (actor) => {
+const handleDeleteMovie = (actor, username) => {
 
     fetch('http://127.0.0.1:8000/checkActorExist', {
 		headers: {
@@ -23,6 +23,7 @@ const handleDeleteMovie = (actor) => {
             method: 'POST',
             body: JSON.stringify({
                 actor,
+                username,
             })
         })
         .then(response => response.json())
@@ -39,7 +40,7 @@ const handleDeleteMovie = (actor) => {
 	})
 }
 
-const DeleteMovie = ({ setMovies }) => {
+const DeleteMovie = ({ setMovies, username }) => {
 
     const [idContent, setIdContent] = React.useState('')
 
@@ -66,7 +67,7 @@ const DeleteMovie = ({ setMovies }) => {
                             return alert('Llene los campos para continuar')
                         }
 
-                        handleDeleteMovie(idContent)
+                        handleDeleteMovie(idContent, username)
                     }}
                 >
                     Agregar Actor {idContent}

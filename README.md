@@ -3,6 +3,13 @@
 - Paola de León: 20361
 - Paola Contreras: 20213
 
+# Tecnologias Utilizadas
+- ⚛ React
+- ⚙ Webpack
+- 📡 Express
+- 🕹 NodeJs
+- 🐘 PostgreSQL
+
 ## Commands
 
 > ### Frontend 

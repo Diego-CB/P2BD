@@ -25,6 +25,8 @@ const {
 	top5admins
 } = require('./controllers/Reports2')
 
+const {conDate, default: execute} = require('./controllers/SimulationInsert.jsx')
+
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
 
@@ -260,6 +262,21 @@ app.post('/profiledisable', (req, res) => {
 
 
 //Admin 
+app.get('/recordList', (req, res) => {
+	const sql = 'SELECT * FROM record'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
 
 app.get('/movieList', (req, res) => {
 	const sql = 'SELECT id_content, title, genre, CAST(release_date as TEXT) FROM contenido'
@@ -278,17 +295,76 @@ app.get('/movieList', (req, res) => {
 })
 
 
+app.get('/actorsList', (req, res) => {
+	const sql = 'SELECT id_actor, actor FROM actors'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
+
+app.get('/castingList', (req, res) => {
+	const sql = 'SELECT c.id_content, (SELECT title FROM contenido con WHERE con.id_content = c.id_content LIMIT 1), c.id_actor FROM casting c'
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+
+			res.json({ list: result.rows })
+		})
+	})
+})
+
+
+app.post('/addCasting', (req, res) => {  
+		
+	const sql = `
+		INSERT INTO casting (id_content, id_actor, username)
+        VALUES (
+            ${req.body.id_content}, 
+            ${req.body.id_actor},
+			'${req.body.username}'
+        )`
+  
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ success: true })
+		})
+	})
+})
+
+
 app.post('/addMovie', (req, res) => {  
 		
 	const sql = `
-		INSERT INTO contenido (title, category, genre, release_date, link, min_duration) 
+		INSERT INTO contenido (title, category, genre, release_date, link, min_duration, username) 
         VALUES (
             '${req.body.title}', 
             ${req.body.category}, 
             '${req.body.genre}', 
             '${req.body.releaseDate}',
             '${req.body.link}', 
-            ${req.body.duration}
+            ${req.body.duration},
+			'${req.body.username}'
         )`
   
 	const client = new pg.Client(conString)
@@ -327,7 +403,8 @@ app.post('/alterMovie', (req, res) => {
 		
 	const sql = `
 		UPDATE contenido
-		SET ${req.body.category} = ${req.body.newValue}
+		SET ${req.body.category} = ${req.body.newValue},
+			username = '${req.body.username}'
 		WHERE id_content = ${req.body.idContent}
 	`
 	const client = new pg.Client(conString)
@@ -473,6 +550,26 @@ app.post('/checkProfileExist', (req, res) => {
 	})
 })
 
+app.post('/checkCastingExist', (req, res) => {  
+		
+	const sql = `SELECT * FROM casting WHERE id_content = ${req.body.id_content} AND id_actor = ${req.body.id_actor}`
+	const client = new pg.Client(conString)
+
+	console.log(sql)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+			client.end()
+			res.json({ 
+				exist: result.rowCount > 0
+			})
+		})
+	})
+})
+
 //alterProfile
 app.post('/alterProfile', (req, res) => {  
 		
@@ -480,6 +577,33 @@ app.post('/alterProfile', (req, res) => {
 		UPDATE user_profiles
 		SET ${req.body.category} = ${req.body.newValue}
 		WHERE id_profile = ${req.body.id_perfil}
+	`
+	const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			client.end()
+
+			if(err) {
+				console.error('error running query', err)
+				res.json({ success: false})
+			}
+			res.json({ 
+				success: true
+			})
+		})
+	})
+})
+
+app.post('/alterCasting', (req, res) => {  
+		
+	const sql = `
+		UPDATE casting
+		SET ${req.body.category} = ${req.body.newValue},
+			username = '${req.body.username}'
+		WHERE id_content = ${req.body.id_content} AND id_actor = ${req.body.id_actor}
 	`
 	const client = new pg.Client(conString)
 
@@ -552,9 +676,10 @@ app.get('/adsList', (req, res) => {
 app.post('/newAdd', (req, res) => {  
 		
 	const sql = `
-		INSERT INTO ad (announcer_id, message) VALUES (
+		INSERT INTO ad (announcer_id, message, username) VALUES (
 			${req.body.announcer}, 
-			'${req.body.message}'
+			'${req.body.message}',
+			'${req.body.username}'
 		)`
   
 	const client = new pg.Client(conString)
@@ -578,7 +703,8 @@ app.post('/alterAd', (req, res) => {
 		
 	const sql = `
 		UPDATE ad
-		SET ${req.body.category} = ${req.body.newValue}
+		SET ${req.body.category} = ${req.body.newValue},
+			username = '${req.body.username}'
 		WHERE ad_id = ${req.body.ad}
 	`
 	const client = new pg.Client(conString)
@@ -649,7 +775,7 @@ app.get('/announcerList', (req, res) => {
 
 app.post('/newAnnouncer', (req, res) => {  
 		
-	const sql = `INSERT INTO announcer (a_name) VALUES ('${req.body.announcer}')`
+	const sql = `INSERT INTO announcer (a_name, username) VALUES ('${req.body.announcer}', '${req.body.username}')`
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -671,7 +797,8 @@ app.post('/alterAnnouncer', (req, res) => {
 		
 	const sql = `
 		UPDATE announcer
-		SET a_name = '${req.body.newValue}'
+		SET a_name = '${req.body.newValue}',
+			username = '${req.body.username}'
 		WHERE announcer_id = ${req.body.announcer}
 	`
 	const client = new pg.Client(conString)
@@ -739,7 +866,7 @@ app.post('/checkActorExist', (req, res) => {
 
 app.post('/addActor', (req, res) => {  
 		
-	const sql = `INSERT INTO actors(actor) VALUES ('${req.body.actor}')`
+	const sql = `INSERT INTO actors(actor, username) VALUES ('${req.body.actor}', '${req.body.username}')`
 	const client = new pg.Client(conString)
 
 	client.connect((err) => {
@@ -763,7 +890,8 @@ app.post('/alterActor', (req, res) => {
 		
 	const sql = `
 		UPDATE actors
-		SET actor = '${req.body.newValue}'
+		SET actor = '${req.body.newValue}',
+			username = '${req.body.username}'
 		WHERE id_actor = ${req.body.actor}
 	`
 
@@ -1361,3 +1489,44 @@ app.post('/Anuncio', (req, res) => {
 })
 
 
+/** SIMULACIONES**/
+
+app.post('/sinFecha', (req, res) => {
+
+	const sql = `SELECT * FROM SinFecha('${req.body.n}')`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				list: result.rows
+			})
+		})
+	})
+})
+
+app.post('/conFecha', conDate)
+
+app.post('/mostrar', (req, res) => {
+
+	const sql = `SELECT * FROM movie_data WHERE started ='${req.body.d}' LIMIT '${req.body.n}'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				list: result.rows
+			})
+		})
+	})
+})

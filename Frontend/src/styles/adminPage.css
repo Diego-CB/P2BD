@@ -1,3 +1,14 @@
+.content {
+    background-color: rgb(20, 30, 61);
+    width: 90vw;
+    height: 100%;
+    overflow: auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+}
 /* Log in */
 .option-container {
     width: 90%;
@@ -57,6 +68,7 @@
     color:aliceblue;
 
     cursor: pointer;
+    margin-bottom: 15px;
 }
 
 .default-button:hover {
@@ -77,8 +89,14 @@
     display: inline-flex;
     justify-content: center;
     align-items: center;
+    background-color: rgb(26, 50, 122);
+    padding:20px;
+    padding-bottom:30px;
+    margin-top: 80px;
+}
 
-    background-color: white;
+.admin-footer > * {
+    margin-left:15px;
 }
 
 .nav-button {
@@ -93,8 +111,144 @@
 
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 290px 290px;
+    grid-template-rows: 390px 350px;
+    /* grid-template-rows: calc(100vh - 74%); */
     grid-gap: 10px;
+}
+
+
+
+/* bitácora */
+.ver-bitacora-admin {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-bitacora-admin header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-bitacora-admin header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-bitacora {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.table-bitacora div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-bitacora {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+    margin-bottom: 20px;
+}
+
+.row-bitacora {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-bitacora p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
+
+/* lista actors */
+.table-headers-actors {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.table-headers-actors div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-actors {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-actors {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-actors p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
+}
+
+
+/* lista casting*/
+.table-headers-casting {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.table-headers-casting div {
+    text-align: center;
+    background-color: grey;
+    /* border: solid black 1px; */
+    color: black;
+}
+
+.table-content-casting {
+    margin:0;
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-content-casting {
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    /* color:white; */
+
+    width: 100%;
+}
+
+.row-content-casting p {
+    border-bottom: solid black 1px;
+    padding-left: 10px;
 }
 
 /* ver content */
@@ -143,6 +297,7 @@
     width: 100%;
     display: grid;
     grid-template-columns: 0.5fr 1fr 1fr 1fr;
+    /* color:white; */
 
     width: 100%;
 }
@@ -155,7 +310,7 @@
 /* Add movies admin */
 .add-content-admin {
     background-color: transparent;
-    height: 100%;
+    height: fit-content;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -225,7 +380,8 @@
 
 /* Delete Content */
 .delete-content-admin {
-    margin-top: 10px;
+    margin-top: 0px;
+    height: auto;
 }
 
 /* ------- User admin ------- */
@@ -251,7 +407,7 @@
 .admin-users-home {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: 1fr 0fr;
     grid-template-areas: "list list" "modify baja";
 }
 
@@ -318,12 +474,24 @@
     height: fit-content;
     justify-content: center;
 }
+.user-modify-admin {
+    width: 100%;
+    height: auto;
+    height: fit-content;
+    justify-content: center;
+}
 
-.alter-movie-form {
+/* .alter-movie-form {
     width: 100%;
     height: 80%;
     margin-top: 0;
     border: none;
+} */
+
+.alter-movie-form {
+    width: 100%;
+    border:none;
+    margin:0;
 }
 
 .alter-user-input {
@@ -332,7 +500,8 @@
 
 .delete-user-admin {
     width: 100%;
-    height: 62.5%;
+    height: 100%;
+    /* height: 62.5%; */
 }
 
 /* ------ admin ads ------ */
@@ -399,7 +568,171 @@
     width: 100%;
 }
 
+
 .date-input input {
     height: 15px;
     width: 200px;
 }
+
+/**SIMULACIONES**/
+.ask{
+    width: 50%;
+    display:flex;
+    margin:auto;
+    margin-top:25px;
+
+}
+.date-input {
+    width: 98%;
+    margin-bottom: 20px;
+    margin-left:10px;
+}
+
+.vis-input {
+    width: 88%;
+    margin-bottom: 10px;
+}
+
+.btn-genera{
+    width: 40%;
+    height: 25px;
+    margin-top:10px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(78, 104, 184);
+    color:aliceblue;
+    cursor: pointer;
+}
+.btn-genera:hover {
+    background-color: rgb(50, 78, 159);
+}
+
+.btn-SF{
+    width: 40%;
+    height: 25px;
+    margin-top:10px;
+    margin-left:10px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgb(78, 104, 184);
+    color:aliceblue;
+    cursor: pointer;
+}
+.btn-SF:hover {
+    background-color: rgb(50, 78, 159);
+}
+
+/* SIMULACIONES CON FECHA */
+.ver-simulacion-admin {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-simulacion-admin header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-simulacion-admin header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-simulacion {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    
+}
+
+.table-simulacion div {
+    text-align: center;
+    background-color: grey;
+    border: solid black 1px;
+    color: black;
+}
+
+.table-simulacion3 {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-simulacion {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    color:black;
+}
+
+.row-simulacion p {
+    border-bottom: solid black 1px;
+    padding-left: 20px;
+}
+
+/* SIMULACIONES SIN FECHA */
+.ver-simulacion-admin1 {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-simulacion-admin1 header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-simulacion-admin1 header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-simulacion1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+}
+
+.table-simulacion1 div {
+    text-align: center;
+    background-color: grey;
+    border: solid black 1px;
+    color: black;
+}
+
+.table-simulacion2 {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-simulacion1 {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color:black;
+}
+
+.row-simulacion1 p {
+    border-bottom: solid black 1px;
+}
+
+.down {
+    margin-top:124px;
+    padding-left: 20px;
+}
+
