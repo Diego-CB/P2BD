@@ -578,9 +578,9 @@
 .ask{
     width: 50%;
     display:flex;
-    margin:auto;
+    margin:0;
     margin-top:25px;
-
+    height: auto;
 }
 .date-input {
     width: 98%;
@@ -729,10 +729,10 @@
 
 .row-simulacion1 p {
     border-bottom: solid black 1px;
+    padding-left: 20px;
 }
 
 .down {
     margin-top:124px;
-    padding-left: 20px;
 }
 
