@@ -1,13 +1,16 @@
 import React from "react"
 import Header from '../../../components/Header.jsx'
-import HomeAProfile from "./AdminProfile/HomeAProfile.jsx"
-import HomeAUser from "./AdminUser/HomeAUser.jsx"
-const AdminUsers = ({ setAdminShow, username }) => {
+import AdminSimulation from "./AdminSimula.jsx"
+import AdminSimulationSF from "./SinFecha.jsx"
+
+
+const HomeSimulation = ({ setAdminShow, username }) => {
 
     const [toggleUsers,setToglleUsers] = React.useState(0)
 
     return (
         <div className = 'content'>
+            <Header title='Simulaciones' user={username}/>
             <div className='main-content-admin select-users'>
                 {toggleUsers == 0 ? 
                     <div className='user-admin-selection'>
@@ -15,20 +18,20 @@ const AdminUsers = ({ setAdminShow, username }) => {
                             type='button'
                             onClick={() => setToglleUsers(1)}
                         >
-                            Administrar Usuarios 
+                            Simular visualizaciones con fecha 
                         </button>
                         
                         <button className="default-button"
                             type='button'
                             onClick={() => setToglleUsers(2)}
                         >
-                            Administrar perfiles 
+                            Simular visualizaciones sin fecha
                         </button>
                     </div>
 
                 : (toggleUsers == 1 
-                    ? <HomeAUser/>
-                    : <HomeAProfile/>
+                    ? <AdminSimulation/>
+                    : <AdminSimulationSF/>
                 )
             }</div>
             <footer className="admin-footer">
@@ -43,4 +46,4 @@ const AdminUsers = ({ setAdminShow, username }) => {
     )
 }
 
-export default AdminUsers
+export default HomeSimulation

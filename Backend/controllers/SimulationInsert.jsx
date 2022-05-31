@@ -25,7 +25,7 @@ const conDate = (req, res) => {
     res.json({ 
       success: true
     })
-    
+
     } catch (e) {
       client.query('ROLLBACK')
       throw e

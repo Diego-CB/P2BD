@@ -445,6 +445,7 @@
     background-color: rgb(50, 78, 159);
 }
 
+/* SIMULACIONES CON FECHA */
 .ver-simulacion-admin {
     height: 100%;
     width:90%;
@@ -467,7 +468,7 @@
 
 .table-simulacion {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
     
 }
 
@@ -484,18 +485,75 @@
     background-color: white;
     list-style: none;
     overflow-y: scroll;
+   
 }
 
 .row-simulacion {
 
     width: 100%;
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     color:black;
-   
+    border:1px solid blue;
 }
 
 .row-simulacion p {
+    border-bottom: solid black 1px;
+    padding-left: 20px;
+    
+}
+
+/* SIMULACIONES SIN FECHA */
+.ver-simulacion-admin1 {
+    height: 100%;
+    width:90%;
+    display: flex;
+    flex-direction: column;
+}
+
+.ver-simulacion-admin1 header{
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.ver-simulacion-admin1 header h3 {
+    background-color: rgb(50, 78, 159);
+    text-align: center;
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+
+.table-simulacion1 {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    
+}
+
+.table-simulacion1 div {
+    text-align: center;
+    background-color: grey;
+    border: solid black 1px;
+    color: black;
+}
+
+.table-simulacion2 {
+    color: black;
+    flex-grow: 1;
+    background-color: white;
+    list-style: none;
+    overflow-y: scroll;
+}
+
+.row-simulacion1 {
+
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    color:black;
+}
+
+.row-simulacion1 p {
     border-bottom: solid black 1px;
     padding-left: 20px;
 }
