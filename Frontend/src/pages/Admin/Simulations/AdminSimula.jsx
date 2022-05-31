@@ -1,46 +1,104 @@
 import React from 'react'
 import Header from "../../../components/Header.jsx"
-import TextInput from "../../../components/TextInput.jsx"
+import TextInput_text from "../../../components/TextInpuText.jsx"
+import TextInput_num from "../../../components/TextInputNumber.jsx"
 
-const AdminSimulation = ({username, setAdminShow }) =>{
+
+const handleSimulacion2 = (n,d,setSimulation) =>{
+
+    fetch('http://127.0.0.1:8000/conFecha', {
+		headers: {
+			'Content-Type': 'application/json'
+		},
+		method: 'POST',
+		body: JSON.stringify({
+			n,
+            d,
+		})
+    })
+
+    .then (response => response.json())
+    .then(result =>{
+        if(result.success){
+            console.log('yas')
+            fetch('http://127.0.0.1:8000/mostrar', {
+		    headers: {
+			    'Content-Type': 'application/json'
+		    },
+            method: 'POST',
+            body: JSON.stringify({
+                n,
+                d,	
+                })
+            })
+            .then(response => response.json())
+            .then(result => {
+                console.log('corrio dude', result.list)
+                setSimulation(result.list)
+            })
+            .catch (error => {
+                console.error('Error al intentar mostrar', error)
+                alert('Error de conexion: intente más tarde')
+            })
+        }
+    })
+
+	.catch (error => {
+		console.error('Error al cargar data', error)
+		alert('Error de conexion:( intente más tarde')
+	})
+
+}
+
+
+const AdminSimulation = ({setAdminShow, username }) =>{
     const [newValue, setNewValue] = React.useState('')
-    return (
-    <div className = 'content'>
-        <Header title='Simulaciones' user={username}/>
-        
-        <div className='ask'>
-            <TextInput 
-                title='Ingrese una fecha mm-dd-yy' 
-                set={setNewValue} 
-                className='date-input'
-            /> 
+    const [newValued, setNewValued] = React.useState('')
+    const [simulation, setSimulation] = React.useState([])
 
-            <TextInput 
-                title='Ingrese cantidad de visualizaciones' 
-                set={setNewValue} 
-                className='vis-input'
-            /> 
-            <button className='btn-genera'>Generar</button>
-        </div>
-        <div className='show-vis'>
+    return (
+    <div className='content'>
+            <div className='ask'>
+                <TextInput_text
+                    title='Ingrese una fecha mm-dd-yy'
+                    set={setNewValued}
+                    className='date-input' />
+
+                <TextInput_num
+                    title='Ingrese cantidad de visualizaciones'
+                    set={setNewValue}
+                    className='vis-input' />
+
+                <button className='btn-genera' onClick={()=>{
+                    handleSimulacion2(newValue,newValued,setSimulation)
+                }}>Generar</button>
+
+            </div>
+            
+            <div className='ver-simulacion-admin'>
             <header>
                 <h3>Simulaciones</h3>
-                <div className="table-headers-user">
-                    <div>Titulo</div>
-                    <div>Usuario</div>
-                    <div>Fecha</div>
+                <div className="table-simulacion">
+                    <div>User_id</div>
+                    <div>Content_id</div>
+                    <div>Started</div>
+                    <div>Finished</div>
                 </div>
             </header>
 
+            <ul className="table-simulacion3">
+                {simulation.map((row, index) => (
+                     <li className="row-simulacion"
+                        key={index}>
+                        <p>{row.profile}</p>
+                        <p>{row.id_content}</p>
+                        <p>{row.started}</p>
+                        <p>{row.finished}</p>
+                    </li>
+                    ))
+                } 
+            </ul>
         </div>
-
-        <footer className="admin-footer">
-                <button 
-                    className="default-button nav-button"
-                    onClick={() => setAdminShow(0)}
-                    > Ir a Homepage
-                </button>
-        </footer>
     </div>
         
     )

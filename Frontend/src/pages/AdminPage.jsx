@@ -22,7 +22,8 @@ const getSpecs = (type) => {
         'Hora pico de servicio'
     ]
     if (type === 'Simulaciones') return [
-        'Simular visualizaciones de un día',
+        'Simular una cantidad visualizaciones en un día en especifico',
+        'Simular una cantidad visualizaciones'
     ]
 
     if (type === 'Bitácora') return [
@@ -35,9 +36,10 @@ const getAdminPath = (type) => {
     if (type === 'Usuarios') return 2
     if (type === 'Anuncios') return 3
     if (type === 'Reporteria') return 4
-    if (type === 'Simulacion') return 5
     if (type === 'Bitácora') return 6
+    if (type === 'Simulaciones') return 5
 }
+
 
 const AdminOption = ({ title, setAdminShow }) => {
 
@@ -71,6 +73,7 @@ import AdminContent from './Admin/content/AdminContent.jsx'
 import AdminUsers from './Admin/users/AdminUsers.jsx'
 import AdminReports from './Admin/Reports/AdminReports.jsx'
 import Bitacora from './Admin/Bitacora/bitacora.jsx'
+import HomeSimulation from './Admin/Simulations/HomeSimulations.jsx'
 
 const AdminPage = ({ username }) => {
     setDocTitle('Admin')
@@ -81,8 +84,8 @@ const AdminPage = ({ username }) => {
     if (amdinShow === 2) return <AdminUsers   setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 3) return <AdminAdds    setAdminShow={setAdminShow} username={username}/>
     if (amdinShow === 4) return <AdminReports setAdminShow={setAdminShow} username={username}/>
-    // if (amdinShow === 5) return <AdminReports setAdminShow={setAdminShow} username={username}/> // Cambiar para simulaciones
     if (amdinShow === 6) return <Bitacora setAdminShow={setAdminShow}/>
+    if (amdinShow === 5) return <HomeSimulation setAdminShow={setAdminShow} username={username}/>
 
     return (
         <div className = 'content'>

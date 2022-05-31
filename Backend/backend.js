@@ -16,6 +16,8 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const pg = require('pg')
 
+const {conDate, default: execute} = require('./controllers/SimulationInsert.jsx')
+
 // Conexion con base de datos
 const conString = "postgres://qlgumddl:HKj8KpKRdvjfoEOdZ67RloTbC5KlTPHQ@raja.db.elephantsql.com/qlgumddl" 
 
@@ -1467,3 +1469,44 @@ app.post('/Anuncio', (req, res) => {
 })
 
 
+/** SIMULACIONES**/
+
+app.post('/sinFecha', (req, res) => {
+
+	const sql = `SELECT * FROM SinFecha('${req.body.n}')`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				list: result.rows
+			})
+		})
+	})
+})
+
+app.post('/conFecha', conDate)
+
+app.post('/mostrar', (req, res) => {
+
+	const sql = `SELECT * FROM movie_data WHERE started ='${req.body.d}' LIMIT '${req.body.n}'`
+    const client = new pg.Client(conString)
+
+	client.connect((err) => {
+		if(err) return console.error('could not connect to postgres', err)
+		
+		client.query(sql, (err, result) => {
+			if(err) return console.error('error running query', err)
+            
+            client.end()
+			res.json({ 
+				list: result.rows
+			})
+		})
+	})
+})
