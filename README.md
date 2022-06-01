@@ -4,11 +4,11 @@
 - Paola Contreras: 20213
 
 # Tecnologias Utilizadas
-- ⚛ **React**
-- ⚙ **Webpack**
-- 📡 **Express**
-- 🕹 **NodeJs**
 - 🐘 **PostgreSQL**
+- 📡 **Express**
+- ⚛ **React**
+- 🕹 **NodeJs**
+> -  PERN stack
 
 ## Carpetas
 - `Backend` — Contiene proyecto de express usado como backend de la aplicación.
