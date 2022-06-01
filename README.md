@@ -15,6 +15,7 @@
 - `Frontend` — Contiene el proyecto de React usado como Frontend de la aplicación.
 - `Backups` — Contiene los dumps hechos de la base de datos.
 - `Scripts` — Contiene los scripts sql utilizados para diferentes partes de la aplicación.
+- Archivo `Analisis.pbix` — Proyecto de Power BI utilizado para informe de visualizaciones.
 
 ## Getting Started
 1. Clone o descarge elcodigo del repositorio por medio de git
