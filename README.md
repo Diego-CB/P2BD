@@ -8,7 +8,7 @@
 - 📡 **Express**
 - ⚛ **React**
 - 🕹 **NodeJs**
-> -  PERN stack
+> PERN stack
 
 ## Carpetas
 - `Backend` — Contiene proyecto de express usado como backend de la aplicación.
