@@ -1,3 +1,15 @@
+/************************************************
+ * Universidad del Valle da Guatemala
+ * Bases de datos 1
+ * Autores:
+ * 	- Diego Córdova: 20212
+ * 	- Paola Contreras: 20213
+ * 	- Paola de León: 20361
+ *
+ * tablas.sql
+ *	- Creacion de esquema inicial 
+ * 		de la base de datos
+ ************************************************/
 
 -- users
 CREATE TABLE users(
