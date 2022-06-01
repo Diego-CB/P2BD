@@ -1,5 +1,17 @@
+/************************************************
+ * Universidad del Valle da Guatemala
+ * Bases de datos 1
+ * Autores:
+ * 	- Diego Córdova: 20212
+ * 	- Paola Contreras: 20213
+ * 	- Paola de León: 20361
+ *
+ * reporteria.sql
+ *	- Consultas sql, vistas y procedimintos 
+ *		almacenados utilizados para la ampliación
+ *    del módulo de reportería
+ ************************************************/
 
--- Query 1
 
 -- Definición de index
 CREATE INDEX content_movie
@@ -142,7 +154,7 @@ FETCH ALL FROM e;
 COMMIT;
 
 
--- QUery 2
+-- Query 2
 CREATE TABLE user_search (
 	term varchar(30) NOT NULL
 );
@@ -176,27 +188,14 @@ ORDER BY cambios DESC LIMIT 5
 
 SELECT * FROM top5admins;
 
+CREATE INDEX record_table_index
+	ON record (table_name);
+
 -- Query 4
 SELECT * FROM movie_data;
 
-SELECT * FROM movie_data 
-WHERE profile = 143;
-ORDER BY profile desc;
-
-ALTER TABLE movie_data ADD COLUMN watched bool;
-
-UPDATE movie_data
-	SET watched = false
-	WHERE id_content = 3
-	AND profile = (
-      SELECT id_profile 
-      FROM user_profiles 
-      WHERE username = 'nuevo' 
-      AND profile = 'nuevo1' 
-      LIMIT 1
-    )
-	;
-
+CREATE INDEX start_movie_time
+	ON movie_data (started);
 
 CREATE OR REPLACE FUNCTION Top20Movies(
 	a_startDate date,
@@ -223,14 +222,14 @@ BEGIN
 END; 
 $$ LANGUAGE 'plpgsql';
 
-
-
+-- Prueba
 SELECT * FROM top20movies('01-01-2022', '12-31-2022');
 
+ 
 
-     
-     
-     
+
+
+
      
      
      
