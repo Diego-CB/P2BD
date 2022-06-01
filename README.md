@@ -16,6 +16,12 @@
 - `Backups` — Contiene los dumps hechos de la base de datos.
 - `Scripts` — Contiene los scripts sql utilizados para diferentes partes de la aplicación.
 
+## Getting Started
+- Clone o descarge elcodigo del repositorio por medio de git
+- Ejecute `npm start` dentro de la carpeta `Frontend`
+- Ejecute `npm start` dentro de la carpeta `Backend`
+- Abra el dev server creado en `http://localhost:8080/` en su web browser
+
 ## Commands
 
 ### Frontend 
